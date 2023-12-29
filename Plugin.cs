@@ -142,6 +142,9 @@ namespace BOSpecialItems
             GlossaryStuffAdder.AddPassive("TargetShift", "All abilities performed by this party member/enemy are performed as if the caster is on the space to the right/left/far right/far left of them.", "TargetShift");
             GlossaryStuffAdder.AddPassive("Pigment Core", "Unlocks the ability to change the colour of this party member's/enemy's health color through a button to the right of it's health bar.", "UntetheredHealthColor");
             GlossaryStuffAdder.AddPassive("Merged", "This enemy will perform an additional ability for each enemy merged into it.", "Merged");
+
+            GlossaryStuffAdder.AddKeyword("Dry Damage", "Dry damage is direct damage that doesn't generate pigment.");
+            GlossaryStuffAdder.AddKeyword("Reliable Damage", "Reliable damage always deals the same amount of damage, regardless of any passives, items, status effects or field effects. It will still \"trigger\" effects that would normally modify damage dealt, such as reducing frail and shield or dealing damage to other enemies if the target has divine protection.");
         }
     }
 }
