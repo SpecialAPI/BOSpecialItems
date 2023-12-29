@@ -1,0 +1,148 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+	  <LangVersion>latest</LangVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Sounds\**" />
+    <EmbeddedResource Remove="Sounds\**" />
+    <None Remove="Sounds\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="FMODAssets\Desktop\BOSpecialItems.bank" />
+    <None Remove="FMODAssets\Desktop\BOSpecialItems.strings.bank" />
+    <None Remove="Resources\AttackIcon_CombatRoll.png" />
+    <None Remove="Resources\AttackIcon_EOTU.png" />
+    <None Remove="Resources\AttackIcon_Fury.png" />
+    <None Remove="Resources\AttackIcon_Mirror.png" />
+    <None Remove="Resources\AttackIcon_Question.png" />
+    <None Remove="Resources\AttackIcon_Retarget.png" />
+    <None Remove="Resources\AttackIcon_TwoIntoOne.png" />
+    <None Remove="Resources\berserk.png" />
+    <None Remove="Resources\BloodyHacksaw.png" />
+    <None Remove="Resources\BlueHealthColor.png" />
+    <None Remove="Resources\CombatDice.png" />
+    <None Remove="Resources\Eyepatch.png" />
+    <None Remove="Resources\failrounds.png" />
+    <None Remove="Resources\fury.png" />
+    <None Remove="Resources\Intent_FuckYou.png" />
+    <None Remove="Resources\JesterHat.png" />
+    <None Remove="Resources\LoudPhone.png" />
+    <None Remove="Resources\MagickalBleach.png" />
+    <None Remove="Resources\Merged.png" />
+    <None Remove="Resources\overdrive.png" />
+    <None Remove="Resources\Palette.png" />
+    <None Remove="Resources\placeholder.png" />
+    <None Remove="Resources\placeholdereffect.png" />
+    <None Remove="Resources\potential.png" />
+    <None Remove="Resources\powerdrive.png" />
+    <None Remove="Resources\PoweredUp.png" />
+    <None Remove="Resources\PurpleHealthColor.png" />
+    <None Remove="Resources\RedHealthColor.png" />
+    <None Remove="Resources\SilverMirror.png" />
+    <None Remove="Resources\Survive.png" />
+    <None Remove="Resources\Survivorship.png" />
+    <None Remove="Resources\targetshift.png" />
+    <None Remove="Resources\TargetShift_FL.png" />
+    <None Remove="Resources\TargetShift_FR.png" />
+    <None Remove="Resources\TargetShift_L.png" />
+    <None Remove="Resources\TargetShift_R.png" />
+    <None Remove="Resources\targetswap.png" />
+    <None Remove="Resources\TheSquirrel.png" />
+    <None Remove="Resources\TheTiderunner.png" />
+    <None Remove="Resources\UINineSliceTest_3.png" />
+    <None Remove="Resources\Ui_ManaToggle_Disabled.png" />
+    <None Remove="Resources\UntetheredHealthColor.png" />
+    <None Remove="Resources\weaken.png" />
+    <None Remove="Resources\WorldShatter.png" />
+    <None Remove="Resources\YellowHealthColor.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="FMODAssets\Desktop\BOSpecialItems.bank" />
+    <EmbeddedResource Include="FMODAssets\Desktop\BOSpecialItems.strings.bank" />
+    <EmbeddedResource Include="Resources\AttackIcon_CombatRoll.png" />
+    <EmbeddedResource Include="Resources\AttackIcon_EOTU.png" />
+    <EmbeddedResource Include="Resources\AttackIcon_Fury.png" />
+    <EmbeddedResource Include="Resources\AttackIcon_Mirror.png" />
+    <EmbeddedResource Include="Resources\AttackIcon_TwoIntoOne.png" />
+    <EmbeddedResource Include="Resources\Berserk.png" />
+    <EmbeddedResource Include="Resources\BloodyHacksaw.png" />
+    <EmbeddedResource Include="Resources\BlueHealthColor.png" />
+    <EmbeddedResource Include="Resources\CombatDice.png" />
+    <EmbeddedResource Include="Resources\Eyepatch.png" />
+    <EmbeddedResource Include="Resources\FailRounds.png" />
+    <EmbeddedResource Include="Resources\Fury.png" />
+    <EmbeddedResource Include="Resources\Intent_FuckYou.png" />
+    <EmbeddedResource Include="Resources\JesterHat.png" />
+    <EmbeddedResource Include="Resources\LoudPhone.png" />
+    <EmbeddedResource Include="Resources\MagickalBleach.png" />
+    <EmbeddedResource Include="Resources\Merged.png" />
+    <EmbeddedResource Include="Resources\Overdrive.png" />
+    <EmbeddedResource Include="Resources\Palette.png" />
+    <EmbeddedResource Include="Resources\Placeholder.png" />
+    <EmbeddedResource Include="Resources\PlaceholderEffect.png" />
+    <EmbeddedResource Include="Resources\AttackIcon_Question.png" />
+    <EmbeddedResource Include="Resources\AttackIcon_Retarget.png" />
+    <EmbeddedResource Include="Resources\Potential.png" />
+    <EmbeddedResource Include="Resources\Powerdrive.png" />
+    <EmbeddedResource Include="Resources\PoweredUp.png" />
+    <EmbeddedResource Include="Resources\PurpleHealthColor.png" />
+    <EmbeddedResource Include="Resources\RedHealthColor.png" />
+    <EmbeddedResource Include="Resources\SilverMirror.png" />
+    <EmbeddedResource Include="Resources\Survive.png" />
+    <EmbeddedResource Include="Resources\Survivorship.png" />
+    <EmbeddedResource Include="Resources\TargetShift.png" />
+    <EmbeddedResource Include="Resources\TargetShift_FL.png" />
+    <EmbeddedResource Include="Resources\TargetShift_FR.png" />
+    <EmbeddedResource Include="Resources\TargetShift_L.png" />
+    <EmbeddedResource Include="Resources\TargetShift_R.png" />
+    <EmbeddedResource Include="Resources\TargetSwap.png" />
+    <EmbeddedResource Include="Resources\TheSquirrel.png" />
+    <EmbeddedResource Include="Resources\TheTiderunner.png" />
+    <EmbeddedResource Include="Resources\UINineSliceTest_3.png" />
+    <EmbeddedResource Include="Resources\UI_ManaToggle_Disabled.png" />
+    <EmbeddedResource Include="Resources\UntetheredHealthColor.png" />
+    <EmbeddedResource Include="Resources\Weaken.png" />
+    <EmbeddedResource Include="Resources\WorldShatter.png" />
+    <EmbeddedResource Include="Resources\YellowHealthColor.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="BepInEx.BaseLib" Version="5.4.21" />
+    <PackageReference Include="BepInEx.Core" Version="5.4.21" />
+    <PackageReference Include="UnityEngine.Modules" Version="2020.3.26">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>compile</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Assembly-CSharp">
+      <HintPath>..\..\..\Program Files\Steam\steamapps\common\Brutal Orchestra\BrutalOrchestra_Data\Managed\public\Assembly-CSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="BrutalAPI">
+      <HintPath>..\..\..\Program Files\Steam\steamapps\common\Brutal Orchestra\BepInEx\plugins\BrutalAPI.dll</HintPath>
+    </Reference>
+    <Reference Include="FMODUnity">
+      <HintPath>..\..\..\Program Files\Steam\steamapps\common\Brutal Orchestra\BrutalOrchestra_Data\Managed\public\FMODUnity.dll</HintPath>
+    </Reference>
+    <Reference Include="Marosi.SerializableCollections">
+      <HintPath>..\..\..\Program Files\Steam\steamapps\common\Brutal Orchestra\BrutalOrchestra_Data\Managed\Marosi.SerializableCollections.dll</HintPath>
+    </Reference>
+    <Reference Include="Marosi.Utility">
+      <HintPath>..\..\..\Program Files\Steam\steamapps\common\Brutal Orchestra\BrutalOrchestra_Data\Managed\Marosi.Utility.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UI">
+      <HintPath>..\..\..\Program Files\Steam\steamapps\common\Brutal Orchestra\BrutalOrchestra_Data\Managed\UnityEngine.UI.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UIModule">
+      <HintPath>..\..\..\Program Files\Steam\steamapps\common\Brutal Orchestra\BrutalOrchestra_Data\Managed\UnityEngine.UIModule.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>
