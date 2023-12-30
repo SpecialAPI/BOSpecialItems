@@ -15,7 +15,7 @@ namespace BOSpecialItems.Content.Items
                 {
                     x._extraAbility = new CharacterAbility()
                     {
-                        cost = Cost(Pigments.Red, Pigments.Red, Pigments.Purple),
+                        cost = Cost(Pigments.Red, Pigments.Red, Pigments.Yellow),
                         ability = CreateScriptable<AbilitySO>(x =>
                         {
                             x.abilitySprite = LoadSprite("AttackIcon_TwoIntoOne");
@@ -75,7 +75,7 @@ namespace BOSpecialItems.Content.Items
                                     targetIntents = new IntentType[]
                                     {
                                         IntentType.Damage_3_6,
-                                        IntentType.Damage_3_6,
+                                        IntentType.Damage_7_10,
                                         IntentType.Misc
                                     },
                                     targets = TargettingLibrary.Relative(false, -1, 1)

@@ -26,9 +26,9 @@ namespace BOSpecialItems.Content.Items.Wearables
 
         public override void TriggerPassive(object sender, object args)
         {
-            if(args is EndAbilityContextAction context && sender is CharacterCombat cc && cc.CombatAbilities.Count > 1)
+            if(args is AbilityContext context && sender is CharacterCombat cc && cc.CombatAbilities.Count > 1)
             {
-                if(context.AbilityID == 0)
+                if(context.abilityId == 0)
                 {
                     CombatManager.Instance.AddUIAction(new ShowItemInformationUIAction((sender as IWearableEffector).ID, GetItemLocData().text, false, wearableImage));
                     if (IsItemImmediate)
@@ -40,7 +40,7 @@ namespace BOSpecialItems.Content.Items.Wearables
                         CombatManager.Instance.AddSubAction(new EffectAction(leftEffects, cc));
                     }
                 }
-                else if(context.AbilityID == cc.CombatAbilities.Count - 1)
+                else if(context.abilityId == cc.CombatAbilities.Count - 1)
                 {
                     CombatManager.Instance.AddUIAction(new ShowItemInformationUIAction((sender as IWearableEffector).ID, GetItemLocData().text, false, wearableImage));
                     if (IsItemImmediate)

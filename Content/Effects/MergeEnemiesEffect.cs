@@ -13,45 +13,48 @@ namespace BOSpecialItems.Content.Effects
             {
                 return false;
             }
-            Dictionary<EnemySO, (int, int, int, List<EnemyCombat>)> mergeData = new();
+            Dictionary<EnemySO, List<EnemyCombat>> mergeData = new();
             foreach (var target in targets)
             {
                 if (target != null && target.HasUnit && target.Unit is EnemyCombat ec && ec.IsAlive && ec.CurrentHealth > 0)
                 {
                     if (!mergeData.ContainsKey(ec.Enemy))
                     {
-                        mergeData.Add(ec.Enemy, (0, 0, -1, new()));
+                        mergeData.Add(ec.Enemy,new());
                     }
-                    if(mergeData.TryGetValue(ec.Enemy, out var dat) && !dat.Item4.Contains(ec))
+                    if(mergeData.TryGetValue(ec.Enemy, out var dat) && !dat.Contains(ec))
                     {
-                        dat.Item1 += ec.MaximumHealth;
-                        dat.Item2 += ec.CurrentHealth;
-                        dat.Item3 += ec.GetStoredValue(StoredValue("MergedCount")) + 1;
-                        dat.Item4.Add(ec);
+                        dat.Add(ec);
                     }
                 }
             }
-            var success = false;
             foreach(var kvp in mergeData)
             {
                 var en = kvp.Key;
-                var dat = kvp.Value;
-                var currenthealth = dat.Item2;
-                var maxhealth = dat.Item1;
-                var extraabilities = dat.Item3;
-                var targettedEnemies = dat.Item4;
-                if (en != null && currenthealth > 0 && maxhealth > 0 && extraabilities >= 0 && targettedEnemies.Count > 1)
+                var targettedEnemies = kvp.Value;
+                if (en != null && targettedEnemies.Count > 1)
                 {
+                    var currenthealth = 0;
+                    var maxhealth = 0;
+                    var extraabilities = -1;
                     foreach (var e in targettedEnemies)
                     {
-                        e.DirectDeath(null, false);
+                        currenthealth += e.CurrentHealth;
+                        maxhealth += e.MaximumHealth;
+                        extraabilities += e.GetStoredValue(StoredValue("MergedCount")) + 1;
                     }
-                    CombatManager.Instance.AddSubAction(new TrySpawnMergedEnemyAction(en, true, maxhealth, currenthealth, extraabilities));
-                    exitAmount += targettedEnemies.Count;
-                    success = true;
+                    if (currenthealth > 0 && maxhealth > 0 && extraabilities >= 0)
+                    {
+                        foreach (var e in targettedEnemies)
+                        {
+                            e.DirectDeath(null, false);
+                        }
+                        CombatManager.Instance.AddSubAction(new TrySpawnMergedEnemyAction(en, true, maxhealth, currenthealth, extraabilities));
+                        exitAmount += targettedEnemies.Count;
+                    }
                 }
             }
-            return success;
+            return exitAmount > 0;
         }
     }
 

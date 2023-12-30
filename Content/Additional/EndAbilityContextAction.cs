@@ -36,7 +36,7 @@ namespace BOSpecialItems.Content.Additional
 				var enemyCombat = stats.TryGetEnemyOnField(Unit.ID);
 				if (enemyCombat != null && enemyCombat.IsAlive)
 				{
-					CombatManager.Instance.PostNotification(CustomEvents.ABILITY_USED_CONTEXT, enemyCombat, this);
+					CombatManager.Instance.PostNotification(CustomEvents.ABILITY_USED_CONTEXT, enemyCombat, new AbilityContext(Ability, AbilityID, Cost));
 				}
 			}
 			yield return null;

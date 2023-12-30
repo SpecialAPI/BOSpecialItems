@@ -7,7 +7,7 @@ namespace BOSpecialItems
     [HarmonyPatch]
     public static class StoredValueAdder
     {
-        public static Dictionary<UnitStoredValueNames, StoredValueInfo> AddedStoredValues;
+        private static Dictionary<UnitStoredValueNames, StoredValueInfo> AddedStoredValues = new();
 
         public static void AddStoredValue(string name, StoredValueInfo info)
         {

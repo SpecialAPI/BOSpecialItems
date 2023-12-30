@@ -47,73 +47,12 @@ namespace BOSpecialItems
     {
         public const string GUID = "SpecialAPI.BOSpecialItems";
 
-        public static ZoneBGDataBaseSO z1;
-        public static ZoneBGDataBaseSO z2;
-        public static ZoneBGDataBaseSO z3;
-        public static ZoneBGDataBaseSO z1_hard;
-        public static ZoneBGDataBaseSO z2_hard;
-        public static ZoneBGDataBaseSO z3_hard;
-
         public void Awake()
         {
             SpecialItemsAssembly = Assembly.GetExecutingAssembly();
 
             LoadFMODBankFromResource("BOSpecialItems");
             LoadFMODBankFromResource("BOSpecialItems.strings");
-
-            z1 = LoadedAssetsHandler.GetZoneDB("ZoneDB_01") as ZoneBGDataBaseSO;
-            z2 = LoadedAssetsHandler.GetZoneDB("ZoneDB_02") as ZoneBGDataBaseSO;
-            z3 = LoadedAssetsHandler.GetZoneDB("ZoneDB_03") as ZoneBGDataBaseSO;
-            z1_hard = LoadedAssetsHandler.GetZoneDB("ZoneDB_Hard_01") as ZoneBGDataBaseSO;
-            z2_hard = LoadedAssetsHandler.GetZoneDB("ZoneDB_Hard_02") as ZoneBGDataBaseSO;
-            z3_hard = LoadedAssetsHandler.GetZoneDB("ZoneDB_Hard_03") as ZoneBGDataBaseSO;
-
-            /*testzone = new()
-            {
-                _baseCombatEnvironment = z2._baseCombatEnvironment,
-                _baseOWEnvironment = z3._baseOWEnvironment,
-                _bossBundleSelector = z1_hard._bossBundleSelector,
-                _combatAmbience = AmbienceType.Secret,
-                _deckInfo = z2_hard._deckInfo,
-                _easyEnemyBundleSelector = z3_hard._easyEnemyBundleSelector,
-                _encounterLevelRank = 3,
-                _FlavourPool = z1_hard._FlavourPool,
-                _foolsRank = 2,
-                _foolsRoom = z2._foolsRoom,
-                _foolsSignType = SignType.Admo,
-                _FreeFoolsPool = z3_hard._FreeFoolsPool,
-                _gameDB = z1_hard._gameDB,
-                _hardEnemyBundleSelector = z2_hard._hardEnemyBundleSelector,
-                _itemRoom = z2_hard._itemRoom,
-                _maxLevelUpRank = 3,
-                _itemSignType = SignType.Psaltery,
-                _mediumEnemyBundleSelector = z1_hard._mediumEnemyBundleSelector,
-                _maxMoneyChestAmount = 99,
-                _minMoneyChestAmount = 1,
-                _moneyChestRoom = z1._moneyChestRoom,
-                _moneyChestSignType = SignType.PitifulCorpse_BOSS,
-                _omittedCharacters = z1_hard._omittedCharacters,
-                _OmittedCharacters = z1_hard._OmittedCharacters,
-                _overworldMusicEvent = z2._overworldMusicEvent,
-                _poolDB = z1_hard._poolDB,
-                _PrizesInRun = z1_hard._PrizesInRun,
-                _EntitiesInRun = z1_hard._EntitiesInRun,
-                _QuestPool = z1_hard._QuestPool,
-                _restAmbience = z3_hard._restAmbience,
-                _ShopItemsInRun = z1_hard._ShopItemsInRun,
-                _shopRoom = z1_hard._shopRoom,
-                _shopSignType = SignType.CranesCorpse,
-                _specialEnemyBundleSelector = z1_hard._specialEnemyBundleSelector,
-                _SpecialQuestPool = z1_hard._SpecialQuestPool,
-                _transitionAmbience = z2_hard._transitionAmbience,
-                _uncheckedCharacters = z2_hard._uncheckedCharacters,
-                _uncheckedFlavours = z1_hard._uncheckedFlavours,
-                _uncheckedFreeFools = z3_hard._uncheckedFreeFools,
-                _uncheckedQuests = z1_hard._uncheckedQuests,
-                _zoneData = z1_hard._zoneData,
-                _zoneLootCalculator = z3_hard._zoneLootCalculator,
-                _zoneName = ZoneType.FarShore
-            };*/
 
             ChangeHealthColorButtonHolder.disabledSprite = LoadSprite("UI_ManaToggle_Disabled", 32);
 
