@@ -57,7 +57,7 @@ namespace BOSpecialItems.Content.Items
                     targetIntents = new IntentType[]
                     {
                         IntentType.Misc,
-                        GenericStatusEffect.GetEffectIntent<WeakenedStatusEffect>()
+                        GetEffectIntent<WeakenedStatusEffect>()
                     },
                     targets = TargettingLibrary.AllAlliesButThisVisual
                 }

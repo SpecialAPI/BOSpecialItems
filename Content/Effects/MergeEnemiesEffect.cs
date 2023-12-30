@@ -4,39 +4,8 @@ using System.Text;
 
 namespace BOSpecialItems.Content.Effects
 {
-    [HarmonyPatch]
     public class MergeEnemiesEffect : EffectSO
     {
-        public static BasePassiveAbilitySO Merged;
-
-        public static void SetupMergedPassive()
-        {
-            Merged = CreateScriptable<IntegerSetterByStoredValuePassiveAbility>(x =>
-            {
-                x._valueName = x.specialStoredValue = ExtendEnum<UnitStoredValueNames>("MergedCount");
-                x._postIncreaseStored = false;
-                x.postIncreaseValue = 0;
-                x._passiveName = "Merged";
-                x._characterDescription = "This character is Merged";
-                x._enemyDescription = "This enemy will perform an additional ability for each enemy merged into it.";
-                x.conditions = null;
-                x._triggerOn = new TriggerCalls[] { TriggerCalls.AttacksPerTurn };
-                x.doesPassiveTriggerInformationPanel = false;
-                x.passiveIcon = LoadSprite("Merged");
-                x.type = ExtendEnum<PassiveAbilityTypes>("Merged");
-            });
-        }
-
-        [HarmonyPatch(typeof(TooltipTextHandlerSO), nameof(TooltipTextHandlerSO.ProcessStoredValue))]
-        [HarmonyPostfix]
-        public static void AddMergedEnemiesStoredValue(TooltipTextHandlerSO __instance, ref string __result, UnitStoredValueNames storedValue, int value)
-        {
-            if (string.IsNullOrEmpty(__result) && storedValue == ExtendEnum<UnitStoredValueNames>("MergedCount") && value > 0)
-            {
-                __result = $"<color=#{ColorUtility.ToHtmlStringRGB(__instance._positiveSTColor)}>Merged Enemies: {value}</color>";
-            }
-        }
-
         public override bool PerformEffect(CombatStats stats, IUnit caster, TargetSlotInfo[] targets, bool areTargetSlots, int entryVariable, out int exitAmount)
         {
             exitAmount = 0;
@@ -57,7 +26,7 @@ namespace BOSpecialItems.Content.Effects
                     {
                         dat.Item1 += ec.MaximumHealth;
                         dat.Item2 += ec.CurrentHealth;
-                        dat.Item3 += ec.GetStoredValue(ExtendEnum<UnitStoredValueNames>("MergedCount")) + 1;
+                        dat.Item3 += ec.GetStoredValue(StoredValue("MergedCount")) + 1;
                         dat.Item4.Add(ec);
                     }
                 }
@@ -113,8 +82,8 @@ namespace BOSpecialItems.Content.Effects
                 {
                     en.MaximumHealth = healthMax;
                     en.CurrentHealth = Math.Min(healthMax, health);
-                    en.SetStoredValue(ExtendEnum<UnitStoredValueNames>("MergedCount"), extraAbilities);
-                    en.AddPassiveAbility(MergeEnemiesEffect.Merged);
+                    en.SetStoredValue(StoredValue("MergedCount"), extraAbilities);
+                    en.AddPassiveAbility(CustomPassives.Merged);
                 }
             }
             yield return null;

@@ -4,7 +4,7 @@ using System.Text;
 
 namespace BOSpecialItems.Content.Status
 {
-    public abstract class GenericStatusEffect : IStatusEffect, ITriggerEffect<IStatusEffector>
+    public static class GenericStatusEffectStaticMethods
     {
         public static Dictionary<Type, StatusEffectInfoSO> AddedGenericEffects = new();
 
@@ -25,15 +25,15 @@ namespace BOSpecialItems.Content.Status
             AddedGenericEffects[typeof(T)] = i;
             if (addToGlossary)
             {
-                GlossaryStuffAdder.AddStatus(i);
+                AddStatus(i);
             }
-            IntentAdder.AddIntent(codename, new IntentInfoBasic()
+            AddIntent(codename, new IntentInfoBasic()
             {
                 _color = new(1f, 1f, 1f, 1f),
                 _sound = "",
                 _sprite = icon
             });
-            IntentAdder.AddIntent($"Rem_{codename}", new IntentInfoBasic()
+            AddIntent($"Rem_{codename}", new IntentInfoBasic()
             {
                 _color = new(0.3529f, 0.3529f, 0.3529f, 1f),
                 _sound = "",
@@ -57,14 +57,17 @@ namespace BOSpecialItems.Content.Status
 
         public static IntentType GetEffectIntent<T>() where T : GenericStatusEffect
         {
-            return IntentAdder.Intent(typeof(T).Name);
+            return Intent(typeof(T).Name);
         }
 
         public static IntentType GetEffectRemoveIntent<T>() where T : GenericStatusEffect
         {
-            return IntentAdder.Intent($"Rem_{typeof(T).Name}");
+            return Intent($"Rem_{typeof(T).Name}");
         }
+    }
 
+    public abstract class GenericStatusEffect : IStatusEffect, ITriggerEffect<IStatusEffector>
+    {
         public StatusEffectInfoSO EffectInfo => AddedGenericEffects[GetType()];
 
         public StatusEffectType EffectType => EffectInfo.statusEffectType;

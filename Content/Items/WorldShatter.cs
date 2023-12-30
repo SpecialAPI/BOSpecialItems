@@ -381,13 +381,13 @@ namespace BOSpecialItems.Content.Items
 					targetIntents = new IntentType[]
 					{
 						IntentType.Damage_Death,
-						IntentAdder.Intent("FuckYou")
+						Intent("FuckYou")
 					},
 					targets = TargettingLibrary.OpposingSlot
 				}
 			}, overrideVisuals: ((LoadedAssetsHandler.GetWearable("DemonCore_SW") as PerformEffectWearable).effects.First(x => x.effect is AnimationVisualsEffect).effect as AnimationVisualsEffect)._visuals));
 
-			IntentAdder.AddIntent("FuckYou", new IntentInfoBasic()
+			AddIntent("FuckYou", new IntentInfoBasic()
 			{
 				_color = Color.white,
 				_sound = "",

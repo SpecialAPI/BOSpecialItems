@@ -20,7 +20,7 @@ namespace BOSpecialItems
         [HarmonyPatch(typeof(GlossaryDataBase), nameof(GlossaryDataBase.Passives), MethodType.Getter)]
         [HarmonyPatch(typeof(GlossaryDataBase), nameof(GlossaryDataBase.Keywords), MethodType.Getter)]
         [HarmonyPrefix]
-        public static void CatchUp(GlossaryDataBase __instance)
+        private static void CatchUp(GlossaryDataBase __instance)
         {
             if(glossaryDB == null)
             {
@@ -38,7 +38,7 @@ namespace BOSpecialItems
 
         [HarmonyPatch(typeof(GlossaryListUIPanel), nameof(GlossaryListUIPanel.TryInitializeStatus))]
         [HarmonyPrefix]
-        public static void AddExtraStatusIconsIfNeeded(GlossaryListUIPanel __instance, StatusEffectInfoSO[] status)
+        private static void AddExtraStatusIconsIfNeeded(GlossaryListUIPanel __instance, StatusEffectInfoSO[] status)
         {
             if (!__instance._initialized)
             {
@@ -109,7 +109,7 @@ namespace BOSpecialItems
 
         [HarmonyPatch(typeof(GlossaryListUIPanel), nameof(GlossaryListUIPanel.TryInitializeField))]
         [HarmonyPrefix]
-        public static void AddExtraFieldIconsIfNeeded(GlossaryListUIPanel __instance, SlotStatusEffectInfoSO[] fields)
+        private static void AddExtraFieldIconsIfNeeded(GlossaryListUIPanel __instance, SlotStatusEffectInfoSO[] fields)
         {
             if (!__instance._initialized)
             {
@@ -180,7 +180,7 @@ namespace BOSpecialItems
 
         [HarmonyPatch(typeof(GlossaryListUIPanel), nameof(GlossaryListUIPanel.TryInitializePassive))]
         [HarmonyPrefix]
-        public static void AddExtraPassiveIconsIfNeeded(GlossaryListUIPanel __instance, GlossaryPassives[] passives)
+        private static void AddExtraPassiveIconsIfNeeded(GlossaryListUIPanel __instance, GlossaryPassives[] passives)
         {
             if (!__instance._initialized && passives.Length > __instance._icons.Length)
             {
@@ -280,7 +280,7 @@ namespace BOSpecialItems
 
         [HarmonyPatch(typeof(GlossaryListUIPanel), nameof(GlossaryListUIPanel.TryInitializeKeyword))]
         [HarmonyPrefix]
-        public static void AddExtraKeywordIconsIfNeeded(GlossaryListUIPanel __instance, GlossaryKeywords[] keywords)
+        private static void AddExtraKeywordIconsIfNeeded(GlossaryListUIPanel __instance, GlossaryKeywords[] keywords)
         {
             if (!__instance._initialized && keywords.Length > __instance._icons.Length)
             {

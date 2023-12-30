@@ -3,12 +3,11 @@ using System.Collections.Generic;
 using System.Text;
 using UnityEngine.UI;
 
-namespace BOSpecialItems.Content.Passive
+namespace BOSpecialItems.Patches
 {
     [HarmonyPatch]
-    public static class UntetheredHealthColor
+    public static class UntetheredHealthUI
     {
-
         [HarmonyPatch(typeof(CombatVisualizationController), nameof(CombatVisualizationController.FirstInitialization))]
         [HarmonyPrefix]
         public static void CopyButton(CombatVisualizationController __instance)

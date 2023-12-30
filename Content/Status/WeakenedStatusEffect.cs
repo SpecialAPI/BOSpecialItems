@@ -4,7 +4,6 @@ using System.Text;
 
 namespace BOSpecialItems.Content.Status
 {
-    [HarmonyPatch]
     public class WeakenedStatusEffect : GenericStatusEffect
     {
         public IUnit guy;
@@ -45,10 +44,19 @@ namespace BOSpecialItems.Content.Status
         {
             base.OnTriggerAttached(caller);
             CombatManager.Instance.AddObserver(OnWillDamageTriggered, TriggerCalls.OnWillApplyDamage.ToString(), caller);
+            CombatManager.Instance.AddObserver(ModifyAbilityRank, CustomEvents.MODIFY_ABILITIES_RANK, caller);
             guy = caller as IUnit;
             if (guy != null && guy is CharacterCombat cc)
             {
                 cc.SetUpDefaultAbilities(true);
+            }
+        }
+
+        public void ModifyAbilityRank(object sender, object args)
+        {
+            if(args is IntegerReference intref)
+            {
+                intref.value -= (Duration + Restrict);
             }
         }
 
@@ -64,17 +72,11 @@ namespace BOSpecialItems.Content.Status
         {
             base.OnTriggerDettached(caller);
             CombatManager.Instance.RemoveObserver(OnWillDamageTriggered, TriggerCalls.OnWillApplyDamage.ToString(), caller);
+            CombatManager.Instance.RemoveObserver(ModifyAbilityRank, CustomEvents.MODIFY_ABILITIES_RANK, caller);
             if (guy != null && guy is CharacterCombat cc)
             {
                 cc.SetUpDefaultAbilities(true);
             }
-        }
-
-        public static int ModifyAbilityRank(int current, CharacterCombat cc)
-        {
-            var weak = cc.StatusEffects.Find(x => x.EffectType == GetEffectType<WeakenedStatusEffect>());
-            var strong = cc.StatusEffects.Find(x => x.EffectType == GetEffectType<PoweredUpStatusEffect>());
-            return cc.Character.ClampRank(current - (weak != null ? weak.StatusContent + weak.Restrictor : 0) + (strong != null ? strong.StatusContent + strong.Restrictor : 0));
         }
     }
 }

@@ -4,30 +4,12 @@
     {
         public static void Init()
         {
-            var tsLeft = CreateScriptable<TargetShiftPassive>(x => 
-            {
-                x.shift = -1;
-                x.passiveIcon = LoadSprite("TargetShift_L");
-                x.type = ExtendEnum<PassiveAbilityTypes>("TargetShift_Left");
-                x._passiveName = "TargetShift (Left)";
-                x._characterDescription = "All actions performed by this party member are performed 1 slot to the left.";
-                x._enemyDescription = "All actions performed by this enemy are performed 1 slot to the left.";
-            });
-            var tsRight = CreateScriptable<TargetShiftPassive>(x => 
-            {
-                x.shift = 1;
-                x.passiveIcon = LoadSprite("TargetShift_R");
-                x.type = ExtendEnum<PassiveAbilityTypes>("TargetShift_Right");
-                x._passiveName = "TargetShift (Right)";
-                x._characterDescription = "All actions performed by this party member are performed 1 slot to the right.";
-                x._enemyDescription = "All actions performed by this enemy are performed 1 slot to the right.";
-            });
             var targetter = new GenericItem<BasicWearable>("Eyepatch", "\"Hit the same less often\"", "This party member now has TargetShift (Left) as a passive. Adds \"Retarget\" as an additional ability, an ability that allows this party member to change their TargetShift.", "Eyepatch", ItemPools.Treasure);
             targetter.item.staticModifiers = new WearableStaticModifierSetterSO[]
             {
                 CreateScriptable<ExtraPassiveAbility_Wearable_SMS>(x =>
                 {
-                    x._extraPassiveAbility = tsLeft;
+                    x._extraPassiveAbility = CustomPassives.TargetShift_Left;
                 }),
                 CreateScriptable<ExtraAbility_Wearable_SMS>(x =>
                 {
@@ -62,7 +44,7 @@
                                     targets = TargettingLibrary.ThisSlot,
                                     effect = CreateScriptable<RemovePassiveFromSelfEffect>(x =>
                                     {
-                                        x.passiveToRemove = tsLeft.type;
+                                        x.passiveToRemove = CustomPassives.TargetShift_Left.type;
                                     }),
                                     entryVariable = 0,
                                     condition = null
@@ -72,7 +54,7 @@
                                     targets = TargettingLibrary.ThisSlot,
                                     effect = CreateScriptable<RemovePassiveFromSelfEffect>(x =>
                                     {
-                                        x.passiveToRemove = tsRight.type;
+                                        x.passiveToRemove = CustomPassives.TargetShift_Right.type;
                                     }),
                                     entryVariable = 0,
                                     condition = null
@@ -82,7 +64,7 @@
                                     targets = TargettingLibrary.ThisSlot,
                                     effect = CreateScriptable<AddPassiveToSelfEffect>(x =>
                                     {
-                                        x.passiveToAdd = tsLeft;
+                                        x.passiveToAdd = CustomPassives.TargetShift_Left;
                                     }),
                                     entryVariable = 0,
                                     condition = CreateScriptable<PreviousEffectCondition>(x =>
@@ -96,7 +78,7 @@
                                     targets = TargettingLibrary.ThisSlot,
                                     effect = CreateScriptable<AddPassiveToSelfEffect>(x =>
                                     {
-                                        x.passiveToAdd = tsRight;
+                                        x.passiveToAdd = CustomPassives.TargetShift_Right;
                                     }),
                                     entryVariable = 0,
                                     condition = CreateScriptable<PreviousEffectCondition>(x =>

@@ -1028,8 +1028,8 @@ namespace BOSpecialItems.Content.Additional
                 {
                     targetIntents = new IntentType[]
                     {
-                        GenericStatusEffect.GetEffectIntent<BerserkStatusEffect>(),
-                        GenericStatusEffect.GetEffectIntent<WeakenedStatusEffect>(),
+                        GetEffectIntent<BerserkStatusEffect>(),
+                        GetEffectIntent<WeakenedStatusEffect>(),
                     },
                     targets = TargettingLibrary.Relative(true, -1)
                 }
@@ -1955,7 +1955,7 @@ namespace BOSpecialItems.Content.Additional
                 {
                     targetIntents = new IntentType[]
                     {
-                        GenericStatusEffect.GetEffectIntent<FuryStatusEffect>()
+                        GetEffectIntent<FuryStatusEffect>()
                     },
                     targets = TargettingLibrary.ThisSlot
                 }
@@ -1975,7 +1975,7 @@ namespace BOSpecialItems.Content.Additional
                 {
                     targetIntents = new IntentType[]
                     {
-                        GenericStatusEffect.GetEffectIntent<PoweredUpStatusEffect>()
+                        GetEffectIntent<PoweredUpStatusEffect>()
                     },
                     targets = TargettingLibrary.Relative(true, -1)
                 }

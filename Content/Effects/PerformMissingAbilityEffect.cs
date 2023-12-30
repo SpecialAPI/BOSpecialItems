@@ -16,7 +16,7 @@ namespace BOSpecialItems.Content.Effects
 					var success = false;
 					if(!cc.Character.usesAllAbilities && cc.Character.HasRankedData)
 					{
-						var abs = cc.Character.rankedData[WeakenedStatusEffect.ModifyAbilityRank(cc.ClampedRank, cc)].rankAbilities;
+						var abs = cc.Character.rankedData[CombatAbilityModifiers.ModifyAbilityRank(cc.ClampedRank, cc)].rankAbilities;
 						if (abs != null && abs.Length > 0)
 						{
 							var abilities = new List<AbilitySO>();

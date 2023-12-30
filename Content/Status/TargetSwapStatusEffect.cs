@@ -11,7 +11,7 @@ namespace BOSpecialItems.Content.Status
         public override void OnTriggerAttached(IStatusEffector caller)
         {
             base.OnTriggerAttached(caller);
-            CombatManager.Instance.AddObserver(ApplyTargetSwap, TargetShiftPassive.EVENT_NAME_UNIT_CHARACTER, caller);
+            CombatManager.Instance.AddObserver(ApplyTargetSwap, CustomEvents.TARGETTING_UNIT_CHARACTER, caller);
         }
 
         public void ApplyTargetSwap(object sender, object args)
@@ -35,7 +35,7 @@ namespace BOSpecialItems.Content.Status
         public override void OnTriggerDettached(IStatusEffector caller)
         {
             base.OnTriggerDettached(caller);
-            CombatManager.Instance.RemoveObserver(ApplyTargetSwap, TargetShiftPassive.EVENT_NAME_UNIT_CHARACTER, caller);
+            CombatManager.Instance.RemoveObserver(ApplyTargetSwap, CustomEvents.TARGETTING_UNIT_CHARACTER, caller);
         }
     }
 }
