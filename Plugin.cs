@@ -33,7 +33,7 @@ using FMODUnity;
 
 namespace BOSpecialItems
 {
-    [BepInPlugin(GUID, "SpecialAPI's Items", "1.0.0")]
+    [BepInPlugin(GUID, "SpecialAPI's Stuff Pack", "1.0.1")]
     [BepInDependency("Bones404.BrutalAPI", BepInDependency.DependencyFlags.HardDependency)]
     [HarmonyPatch]
     public class Plugin : BaseUnityPlugin

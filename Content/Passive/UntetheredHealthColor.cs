@@ -45,7 +45,7 @@ namespace BOSpecialItems.Content.Passive
                 {
                     u = CombatManager.Instance._stats.TryGetEnemyOnField(CombatManager.Instance._combatUI.UnitInInfoID);
                 }
-                bool buttonActive = u != null && u.UnitExt().HealthColors.Count > 0;
+                bool buttonActive = u != null && u.UnitExt().HealthColors.Count > 1;
                 var buttonhold = __instance.GetComponent<ChangeHealthColorButtonHolder>();
                 if(buttonhold != null && buttonhold.button != null)
                 {
