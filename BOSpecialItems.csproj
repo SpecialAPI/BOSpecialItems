@@ -15,6 +15,7 @@
   <ItemGroup>
     <None Remove="FMODAssets\Desktop\BOSpecialItems.bank" />
     <None Remove="FMODAssets\Desktop\BOSpecialItems.strings.bank" />
+    <None Remove="Resources\ArtOfViolence.png" />
     <None Remove="Resources\AttackIcon_CombatRoll.png" />
     <None Remove="Resources\AttackIcon_EOTU.png" />
     <None Remove="Resources\AttackIcon_Fury.png" />
@@ -26,6 +27,7 @@
     <None Remove="Resources\BloodyHacksaw.png" />
     <None Remove="Resources\BlueHealthColor.png" />
     <None Remove="Resources\CombatDice.png" />
+    <None Remove="Resources\ConjoinedFungi.png" />
     <None Remove="Resources\Eyepatch.png" />
     <None Remove="Resources\failrounds.png" />
     <None Remove="Resources\fury.png" />
@@ -36,6 +38,7 @@
     <None Remove="Resources\Merged.png" />
     <None Remove="Resources\overdrive.png" />
     <None Remove="Resources\Palette.png" />
+    <None Remove="Resources\PetrifiedMedicine.png" />
     <None Remove="Resources\placeholder.png" />
     <None Remove="Resources\placeholdereffect.png" />
     <None Remove="Resources\potential.png" />
@@ -43,6 +46,7 @@
     <None Remove="Resources\PoweredUp.png" />
     <None Remove="Resources\PurpleHealthColor.png" />
     <None Remove="Resources\RedHealthColor.png" />
+    <None Remove="Resources\RipAndTear.png" />
     <None Remove="Resources\SilverMirror.png" />
     <None Remove="Resources\Survive.png" />
     <None Remove="Resources\Survivorship.png" />
@@ -65,6 +69,7 @@
   <ItemGroup>
     <EmbeddedResource Include="FMODAssets\Desktop\BOSpecialItems.bank" />
     <EmbeddedResource Include="FMODAssets\Desktop\BOSpecialItems.strings.bank" />
+    <EmbeddedResource Include="Resources\ArtOfViolence.png" />
     <EmbeddedResource Include="Resources\AttackIcon_CombatRoll.png" />
     <EmbeddedResource Include="Resources\AttackIcon_EOTU.png" />
     <EmbeddedResource Include="Resources\AttackIcon_Fury.png" />
@@ -74,6 +79,7 @@
     <EmbeddedResource Include="Resources\BloodyHacksaw.png" />
     <EmbeddedResource Include="Resources\BlueHealthColor.png" />
     <EmbeddedResource Include="Resources\CombatDice.png" />
+    <EmbeddedResource Include="Resources\ConjoinedFungi.png" />
     <EmbeddedResource Include="Resources\Eyepatch.png" />
     <EmbeddedResource Include="Resources\FailRounds.png" />
     <EmbeddedResource Include="Resources\Fury.png" />
@@ -84,6 +90,7 @@
     <EmbeddedResource Include="Resources\Merged.png" />
     <EmbeddedResource Include="Resources\Overdrive.png" />
     <EmbeddedResource Include="Resources\Palette.png" />
+    <EmbeddedResource Include="Resources\PetrifiedMedicine.png" />
     <EmbeddedResource Include="Resources\Placeholder.png" />
     <EmbeddedResource Include="Resources\PlaceholderEffect.png" />
     <EmbeddedResource Include="Resources\AttackIcon_Question.png" />
@@ -93,6 +100,7 @@
     <EmbeddedResource Include="Resources\PoweredUp.png" />
     <EmbeddedResource Include="Resources\PurpleHealthColor.png" />
     <EmbeddedResource Include="Resources\RedHealthColor.png" />
+    <EmbeddedResource Include="Resources\RipAndTear.png" />
     <EmbeddedResource Include="Resources\SilverMirror.png" />
     <EmbeddedResource Include="Resources\Survive.png" />
     <EmbeddedResource Include="Resources\Survivorship.png" />

@@ -4,7 +4,7 @@ using System.Text;
 
 namespace BOSpecialItems.Content.Items
 {
-    public static class UntetheredHealthItem
+    public static class ArtistsPalette
     {
 
         public static void Init()

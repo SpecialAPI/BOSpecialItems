@@ -83,7 +83,11 @@ namespace BOSpecialItems
             Survivorship.Init();
             TheSquirrel.Init();
             BloodyHacksaw.Init();
-            UntetheredHealthItem.Init();
+            ArtistsPalette.Init();
+            ArtOfViolence.Init();
+            RipAndTear.Init();
+            ConjoinedFungi.Init();
+            PetrifiedMedicine.Init();
 
             AddPassive("TargetShift", "All abilities performed by this party member/enemy are performed as if the caster is on the space to the right/left/far right/far left of them.", "TargetShift");
             AddPassive("Pigment Core", "Unlocks the ability to change the colour of this party member's/enemy's health color through a button to the right of it's health bar.", "UntetheredHealthColor");
