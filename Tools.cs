@@ -10,6 +10,7 @@ using UnityEngine;
 
 namespace BOSpecialItems
 {
+    [HarmonyPatch]
     public static class Tools
     {
         public static Assembly SpecialItemsAssembly;
@@ -49,6 +50,11 @@ namespace BOSpecialItems
                 return Sprite.Create(tex, new Rect(0f, 0f, tex.width, tex.height), pivot ?? new Vector2(0.5f, 0.5f), pixelsperunit);
             }
             return null;
+        }
+
+        public static string ToCodeName(this string orig)
+        {
+            return orig.Replace("'", "").Replace("-", "").Replace(" ", "");
         }
 
         public static string FormatEffectText(int dura, int restrict)
@@ -315,6 +321,18 @@ namespace BOSpecialItems
             return ext.Characters[cc.ID];
         }
 
+        public static string TrimGuid(this string str)
+        {
+            if (str.Contains("."))
+            {
+                return str.Substring(str.LastIndexOf(".") + 1);
+            }
+            else
+            {
+                return str;
+            }
+        }
+
         public static EnemyCombatExt Ext(this EnemyCombat cc)
         {
             var ext = CombatManager.Instance.Ext();
@@ -325,6 +343,103 @@ namespace BOSpecialItems
             return ext.Enemies[cc.ID];
         }
 
+        public static T NewItem<T>(string name, string flavor, string description, string sprite, ItemPools pools, int price = 0, bool silent = false) where T : BaseWearableSO
+        {
+            return CreateScriptable<T>(x =>
+            {
+                x._itemName = name;
+                x._flavourText = flavor;
+                x._description = description;
+                x.wearableImage = LoadSprite(sprite);
+                x.isShopItem = pools.HasFlag(ItemPools.Shop);
+                x.shopPrice = price;
+                x.staticModifiers = new WearableStaticModifierSetterSO[0];
+
+                x.startsLocked = false;
+                x.hasSpecialUnlock = false;
+                x.usesTheOnUnlockText = false;
+
+                x.name = name.ToCodeName();
+
+                if (pools.HasFlag(ItemPools.Shop))
+                {
+                    x.name += "_SW";
+                }
+                if (pools.HasFlag(ItemPools.Treasure))
+                {
+                    x.name += "_TW";
+                }
+                if (pools.HasFlag(ItemPools.Fish))
+                {
+                    x.name += "_FW";
+                }
+                if (pools.HasFlag(ItemPools.Extra))
+                {
+                    x.name += "_ExtraW";
+                }
+
+                if (pools.HasFlag(ItemPools.Shop))
+                {
+                    if(itemdb != null)
+                    {
+                        itemdb._ShopPool = itemdb._ShopPool.AddToArray(x.name);
+                    }
+                    else
+                    {
+                        shopItemsToAdd.Add(x.name);
+                    }
+                }
+                if (pools.HasFlag(ItemPools.Treasure))
+                {
+                    if (itemdb != null)
+                    {
+                        itemdb._TreasurePool = itemdb._TreasurePool.AddToArray(x.name);
+                    }
+                    else
+                    {
+                        treasuresToAdd.Add(x.name);
+                    }
+                }
+
+                if (!silent)
+                {
+                    Debug.Log($"Added item {x.name}");
+                }
+
+                LoadedAssetsHandler.LoadedWearables[x.name] = x;
+            });
+        }
+
+        [HarmonyPatch(typeof(ItemPoolDataBaseSO), nameof(ItemPoolDataBaseSO.ShopPool), MethodType.Getter)]
+        [HarmonyPatch(typeof(ItemPoolDataBaseSO), nameof(ItemPoolDataBaseSO.TreasurePool), MethodType.Getter)]
+        [HarmonyPrefix]
+        public static void AddItemsToPool(ItemPoolDataBaseSO __instance)
+        {
+            if(itemdb == null)
+            {
+                itemdb = __instance;
+
+                itemdb._TreasurePool = itemdb._TreasurePool.Concat(treasuresToAdd).ToArray();
+                itemdb._ShopPool = itemdb._ShopPool.Concat(shopItemsToAdd).ToArray();
+
+                treasuresToAdd.Clear();
+                shopItemsToAdd.Clear();
+            }
+        }
+
+        private static ItemPoolDataBaseSO itemdb;
+
+        private static readonly List<string> shopItemsToAdd = new();
+        private static readonly List<string> treasuresToAdd = new();
         public static readonly Dictionary<string, AbilitySO> LoadedBossAbilities = new();
+    }
+
+    [Flags]
+    public enum ItemPools
+    {
+        Shop = 1,
+        Treasure = 2,
+        Fish = 4,
+        Extra = 8
     }
 }

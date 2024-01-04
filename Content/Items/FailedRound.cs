@@ -8,15 +8,15 @@ namespace BOSpecialItems.Content.Items
     {
         public static void Init()
         {
-            var failedround = new GenericItem<PerformEffectWearable>("Failed Round", "\"Misfire\"", "This party member is 1 level higher than they would be otherwise.\nOn combat start, inflict 1 TargetSwap to this party member", "FailRounds", ItemPools.Treasure);
-            failedround.item.staticModifiers = new WearableStaticModifierSetterSO[]
+            var failedround = NewItem<PerformEffectWearable>("Failed Round", "\"Misfire\"", "This party member is 1 level higher than they would be otherwise.\nOn combat start, inflict 1 TargetSwap to this party member", "FailRounds", ItemPools.Treasure);
+            failedround.staticModifiers = new WearableStaticModifierSetterSO[]
             {
                 CreateScriptable<RankChange_Wearable_SMS>(x =>
                 {
                     x._rankAdditive = 1;
                 })
             };
-            failedround.item.effects = new EffectInfo[]
+            failedround.effects = new EffectInfo[]
             {
                 new()
                 {
@@ -26,10 +26,9 @@ namespace BOSpecialItems.Content.Items
                     targets = TargettingLibrary.ThisSlot
                 }
             };
-            failedround.item.triggerOn = TriggerCalls.OnCombatStart;
-            failedround.item.doesItemPopUp = true;
-            failedround.AddItem();
-            failedround.item.AttachGadget(GadgetDB.GetGadget("Trick or Treat"));
+            failedround.triggerOn = TriggerCalls.OnCombatStart;
+            failedround.doesItemPopUp = true;
+            failedround.AttachGadget(GadgetDB.GetGadget("Trick or Treat"));
         }
     }
 }

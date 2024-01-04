@@ -73,7 +73,7 @@ namespace BOSpecialItems.Content.Additional
                 x.type = ExtendEnum<PassiveAbilityTypes>("Merged");
             });
 
-            UntetheredHealth = CreateScriptable<PerformEffectOnAttachPassive>(x =>
+            UntetheredHealth = CreateScriptable<Connection_PerformEffectPassiveAbility>(x =>
             {
                 x._passiveName = "Untethered Core";
                 x._characterDescription = "Allows this party member's health to be toggled to any basic color.";
@@ -83,8 +83,7 @@ namespace BOSpecialItems.Content.Additional
                 x.doesPassiveTriggerInformationPanel = true;
                 x.passiveIcon = LoadSprite("UntetheredHealthColor");
                 x.type = ExtendEnum<PassiveAbilityTypes>("UntetheredHealthColor");
-                x.immediate = false;
-                x.effects = new EffectInfo[]
+                x.connectionEffects = new EffectInfo[]
                 {
                     new()
                     {
@@ -100,8 +99,10 @@ namespace BOSpecialItems.Content.Additional
                         targets = TargettingLibrary.ThisSlot
                     }
                 };
+                x.immediateEffect = false;
+                x.disconnectionEffects = new EffectInfo[0];
             });
-            RedHealth = CreateScriptable<PerformEffectOnAttachPassive>(x =>
+            RedHealth = CreateScriptable<Connection_PerformEffectPassiveAbility>(x =>
             {
                 x._passiveName = "Red Core";
                 x._characterDescription = "Allows this party member's health to be toggled to red.";
@@ -111,8 +112,7 @@ namespace BOSpecialItems.Content.Additional
                 x.doesPassiveTriggerInformationPanel = true;
                 x.passiveIcon = LoadSprite("RedHealthColor");
                 x.type = ExtendEnum<PassiveAbilityTypes>("RedHealthColor");
-                x.immediate = false;
-                x.effects = new EffectInfo[]
+                x.connectionEffects = new EffectInfo[]
                 {
                     new()
                     {
@@ -125,8 +125,10 @@ namespace BOSpecialItems.Content.Additional
                         targets = TargettingLibrary.ThisSlot
                     }
                 };
+                x.immediateEffect = false;
+                x.disconnectionEffects = new EffectInfo[0];
             });
-            BlueHealth = CreateScriptable<PerformEffectOnAttachPassive>(x =>
+            BlueHealth = CreateScriptable<Connection_PerformEffectPassiveAbility>(x =>
             {
                 x._passiveName = "Blue Core";
                 x._characterDescription = "Allows this party member's health to be toggled to blue.";
@@ -136,8 +138,7 @@ namespace BOSpecialItems.Content.Additional
                 x.doesPassiveTriggerInformationPanel = true;
                 x.passiveIcon = LoadSprite("BlueHealthColor");
                 x.type = ExtendEnum<PassiveAbilityTypes>("BlueHealthColor");
-                x.immediate = false;
-                x.effects = new EffectInfo[]
+                x.connectionEffects = new EffectInfo[]
                 {
                     new()
                     {
@@ -150,8 +151,10 @@ namespace BOSpecialItems.Content.Additional
                         targets = TargettingLibrary.ThisSlot
                     }
                 };
+                x.immediateEffect = false;
+                x.disconnectionEffects = new EffectInfo[0];
             });
-            YellowHealth = CreateScriptable<PerformEffectOnAttachPassive>(x =>
+            YellowHealth = CreateScriptable<Connection_PerformEffectPassiveAbility>(x =>
             {
                 x._passiveName = "Yellow Core";
                 x._characterDescription = "Allows this party member's health to be toggled to yellow.";
@@ -161,8 +164,7 @@ namespace BOSpecialItems.Content.Additional
                 x.doesPassiveTriggerInformationPanel = true;
                 x.passiveIcon = LoadSprite("YellowHealthColor");
                 x.type = ExtendEnum<PassiveAbilityTypes>("YellowHealthColor");
-                x.immediate = false;
-                x.effects = new EffectInfo[]
+                x.connectionEffects = new EffectInfo[]
                 {
                     new()
                     {
@@ -175,8 +177,10 @@ namespace BOSpecialItems.Content.Additional
                         targets = TargettingLibrary.ThisSlot
                     }
                 };
+                x.immediateEffect = false;
+                x.disconnectionEffects = new EffectInfo[0];
             });
-            PurpleHealth = CreateScriptable<PerformEffectOnAttachPassive>(x =>
+            PurpleHealth = CreateScriptable<Connection_PerformEffectPassiveAbility>(x =>
             {
                 x._passiveName = "Purple Core";
                 x._characterDescription = "Allows this party member's health to be toggled to purple.";
@@ -186,8 +190,7 @@ namespace BOSpecialItems.Content.Additional
                 x.doesPassiveTriggerInformationPanel = true;
                 x.passiveIcon = LoadSprite("PurpleHealthColor");
                 x.type = ExtendEnum<PassiveAbilityTypes>("PurpleHealthColor");
-                x.immediate = false;
-                x.effects = new EffectInfo[]
+                x.connectionEffects = new EffectInfo[]
                 {
                     new()
                     {
@@ -200,6 +203,8 @@ namespace BOSpecialItems.Content.Additional
                         targets = TargettingLibrary.ThisSlot
                     }
                 };
+                x.immediateEffect = false;
+                x.disconnectionEffects = new EffectInfo[0];
             });
         }
     }

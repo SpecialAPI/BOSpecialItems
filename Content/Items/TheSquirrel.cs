@@ -8,11 +8,10 @@ namespace BOSpecialItems.Content.Items
     {
         public static void Init()
         {
-            var squirrel = new GenericItem<ModifyWrongPigmentWearable>("The Squirrel", "\"Free Sacrifice\"", "The first wrong pigment used in an ability deals no damage and doesn't trigger Delicate.", "TheSquirrel", ItemPools.Treasure);
-            squirrel.item.addWrongPigment = -1;
-            squirrel.item.doesItemPopUp = false;
-            squirrel.AddItem();
-            squirrel.item.AttachGadget(GadgetDB.GetGadget("Concentrate"));
+            var squirrel = NewItem<ModifyWrongPigmentWearable>("The Squirrel", "\"Free Sacrifice\"", "The first wrong pigment used in an ability deals no damage and doesn't trigger Delicate.", "TheSquirrel", ItemPools.Treasure);
+            squirrel.addWrongPigment = -1;
+            squirrel.doesItemPopUp = false;
+            squirrel.AttachGadget(GadgetDB.GetGadget("Concentrate"));
         }
     }
 }

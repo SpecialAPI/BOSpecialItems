@@ -8,9 +8,9 @@ namespace BOSpecialItems.Content.Items
     {
         public static void Init()
         {
-            var item = new GenericItem<PerformEffectWearable>("Rip and Tear", "\"Enemies have a 20% cha- oh wait, wrong game\"", "Upon killing an enemy, apply 2 Fury and 2 Berserk to this party member.", "RipAndTear", ItemPools.Treasure);
-            item.item.triggerOn = TriggerCalls.OnKill;
-            item.item.effects = new EffectInfo[]
+            var item = NewItem<PerformEffectWearable>("Rip and Tear", "\"Enemies have a 20% cha- oh wait, wrong game\"", "Upon killing an enemy, apply 2 Fury and 2 Berserk to this party member.", "RipAndTear", ItemPools.Treasure);
+            item.triggerOn = TriggerCalls.OnKill;
+            item.effects = new EffectInfo[]
             {
                 new()
                 {
@@ -27,7 +27,6 @@ namespace BOSpecialItems.Content.Items
                     targets = TargettingLibrary.ThisSlot
                 },
             };
-            item.AddItem();
         }
     }
 }

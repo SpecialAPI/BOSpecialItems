@@ -10,9 +10,9 @@ namespace BOSpecialItems.Content.Items
         {
             var percentageIncrease = 20;
 
-            var item = new GenericItem<PerformEffectWearable>("Conjoined Fungi", "\"<size=50%>We are not welcome elsewhere.</size>\"", $"On combat start, increase the health of all enemies by {percentageIncrease}%, then merge all enemies of the same type.", "ConjoinedFungi", ItemPools.Treasure);
-            item.item.triggerOn = TriggerCalls.OnCombatStart;
-            item.item.effects = new EffectInfo[]
+            var item = NewItem<PerformEffectWearable>("Conjoined Fungi", "\"<size=50%>We are not welcome elsewhere.</size>\"", $"On combat start, increase the health of all enemies by {percentageIncrease}%, then merge all enemies of the same type.", "ConjoinedFungi", ItemPools.Treasure);
+            item.triggerOn = TriggerCalls.OnCombatStart;
+            item.effects = new EffectInfo[]
             {
                 new()
                 {
@@ -29,7 +29,6 @@ namespace BOSpecialItems.Content.Items
                     targets = TargettingLibrary.AllEnemies
                 }
             };
-            item.AddItem();
         }
     }
 }

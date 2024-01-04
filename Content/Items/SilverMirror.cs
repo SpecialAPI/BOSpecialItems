@@ -8,9 +8,9 @@ namespace BOSpecialItems.Content.Items
     {
         public static void Init()
         {
-            var mirror = new GenericItem<PerformEffectWearable>("Silvered Mirror", "\"Twisted reflections\"", "At the beginning of combat, gain an additional ability based on the held item of the left ally.", "SilverMirror", ItemPools.Treasure);
-            mirror.item.triggerOn = TriggerCalls.OnFirstTurnStart;
-            mirror.item.effects = new EffectInfo[]
+            var mirror = NewItem<PerformEffectWearable>("Silvered Mirror", "\"Twisted reflections\"", "At the beginning of combat, gain an additional ability based on the held item of the left ally.", "SilverMirror", ItemPools.Treasure);
+            mirror.triggerOn = TriggerCalls.OnFirstTurnStart;
+            mirror.effects = new EffectInfo[]
             {
                 new()
                 {
@@ -20,8 +20,7 @@ namespace BOSpecialItems.Content.Items
                     targets = TargettingLibrary.Relative(true, -1)
                 }
             };
-            mirror.AddItem();
-            mirror.item.AttachGadget(GadgetDB.GetGadget("Infinity"));
+            mirror.AttachGadget(GadgetDB.GetGadget("Infinity"));
         }
     }
 }

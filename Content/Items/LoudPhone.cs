@@ -10,13 +10,13 @@ namespace BOSpecialItems.Content.Items
         {
             var chance = 60;
 
-            var loudphone = new GenericItem<PerformEffectWearable>("LoudPhone", "\"CAW CAW CAW\"", $"{chance}% chance to refresh this party member's abilities upon performing an ability. Inflict Weakened to this party member if they get refreshed.", "LoudPhone", ItemPools.Treasure);
-            loudphone.item.triggerOn = TriggerCalls.OnAbilityUsed;
-            loudphone.item.conditions = new EffectorConditionSO[]
+            var loudphone = NewItem<PerformEffectWearable>("LoudPhone", "\"CAW CAW CAW\"", $"{chance}% chance to refresh this party member's abilities upon performing an ability. Inflict Weakened to this party member if they get refreshed.", "LoudPhone", ItemPools.Treasure);
+            loudphone.triggerOn = TriggerCalls.OnAbilityUsed;
+            loudphone.conditions = new EffectorConditionSO[]
             {
                 CreateScriptable<PercentageEffectorCondition>(x => x.triggerPercentage = chance)
             };
-            loudphone.item.effects = new EffectInfo[]
+            loudphone.effects = new EffectInfo[]
             {
                 new()
                 {
@@ -33,8 +33,7 @@ namespace BOSpecialItems.Content.Items
                     entryVariable = 1
                 }
             };
-            loudphone.AddItem();
-            loudphone.item.AttachGadget(GadgetDB.SetupGadget("CAW", "CAW CAW CAW", "BodyScream_A", TargettingLibrary.AllAlliesButThisVisual, Cost(Pigments.Gray, Pigments.Gray), new EffectInfo[]
+            loudphone.AttachGadget(GadgetDB.SetupGadget("CAW", "CAW CAW CAW", "BodyScream_A", TargettingLibrary.AllAlliesButThisVisual, Cost(Pigments.Grey, Pigments.Grey), new EffectInfo[]
             {
                 new()
                 {

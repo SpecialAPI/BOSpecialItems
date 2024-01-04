@@ -8,8 +8,8 @@ namespace BOSpecialItems.Content.Items
     {
         public static void Init()
         {
-            var survivorship = new GenericItem<PerformEffectWearable>("Survivorship", "\"Yet you stand\"", "On combat start, apply 1 Survive to this party member.", "Survivorship", ItemPools.Treasure, 0);
-            survivorship.item.effects = new EffectInfo[]
+            var survivorship = NewItem<PerformEffectWearable>("Survivorship", "\"Yet you stand\"", "On combat start, apply 1 Survive to this party member.", "Survivorship", ItemPools.Treasure, 0);
+            survivorship.effects = new EffectInfo[]
             {
                 new()
                 {
@@ -19,10 +19,9 @@ namespace BOSpecialItems.Content.Items
                     targets = TargettingLibrary.ThisSlot
                 }
             };
-            survivorship.item.triggerOn = TriggerCalls.OnCombatStart;
-            survivorship.item.doesItemPopUp = true;
-            survivorship.AddItem();
-            survivorship.item.AttachGadget(GadgetDB.GetGadget("Fake Death"));
+            survivorship.triggerOn = TriggerCalls.OnCombatStart;
+            survivorship.doesItemPopUp = true;
+            survivorship.AttachGadget(GadgetDB.GetGadget("Fake Death"));
         }
     }
 }

@@ -1602,14 +1602,14 @@ namespace BOSpecialItems.Content.Additional
                 new()
                 {
                     condition = null,
-                    effect = CreateScriptable<AddInfestationEffect>(x => x.infestation = Passives.Infestation),
+                    effect = CreateScriptable<AddInfestationEffect>(x => x.infestation = Passives.Infestation(1)),
                     entryVariable = 0,
                     targets = TargettingLibrary.Relative(true, -1, 0)
                 },
                 new()
                 {
                     condition = null,
-                    effect = CreateScriptable<AddInfestationEffect>(x => x.infestation = Passives.Infestation),
+                    effect = CreateScriptable<AddInfestationEffect>(x => x.infestation = Passives.Infestation(1)),
                     entryVariable = 0,
                     targets = TargettingLibrary.OpposingSlot
                 },
@@ -1852,7 +1852,7 @@ namespace BOSpecialItems.Content.Additional
                 new()
                 {
                     condition = null,
-                    effect = CreateScriptable<ModifyManaNotOfSpecificColorEffect>(x => { x.options = Cost(Pigments.Gray); x.excludeColor = Pigments.Gray; }),
+                    effect = CreateScriptable<ModifyManaNotOfSpecificColorEffect>(x => { x.options = Cost(Pigments.Grey); x.excludeColor = Pigments.Grey; }),
                     entryVariable = 0,
                     targets = null
                 },

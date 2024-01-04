@@ -8,8 +8,8 @@ namespace BOSpecialItems.Content.Items
     {
         public static void Init()
         {
-            var shatter = new GenericItem<BasicWearable>("World Shatter", "\"Goodbye\"", "Adds \"End of the Universe\" as an additional ability.", "WorldShatter", ItemPools.Treasure);
-            shatter.item.staticModifiers = new WearableStaticModifierSetterSO[]
+            var shatter = NewItem<BasicWearable>("World Shatter", "\"Goodbye\"", "Adds \"End of the Universe\" as an additional ability.", "WorldShatter", ItemPools.Treasure);
+            shatter.staticModifiers = new WearableStaticModifierSetterSO[]
             {
                 CreateScriptable<ExtraAbility_Wearable_SMS>(x =>
                 {
@@ -356,9 +356,8 @@ namespace BOSpecialItems.Content.Items
                     };
                 })
             };
-			shatter.AddItem();
 
-			shatter.item.AttachGadget(GadgetDB.SetupGadget("Death's Door", "Deal 977106737 damage to the opposing enemy.\n10% chance to close the game and delete the current run.\nI wanted to make the damage number even bigger but unfortunately the int limit is a thing.", null, null, Cost(Pigments.Red, Pigments.Red, Pigments.Red, Pigments.Red, Pigments.Red), new EffectInfo[]
+			shatter.AttachGadget(GadgetDB.SetupGadget("Death's Door", "Deal 977106737 damage to the opposing enemy.\n10% chance to close the game and delete the current run.\nI wanted to make the damage number even bigger but unfortunately the int limit is a thing.", null, null, Cost(Pigments.Red, Pigments.Red, Pigments.Red, Pigments.Red, Pigments.Red), new EffectInfo[]
 			{
 				new()
 				{

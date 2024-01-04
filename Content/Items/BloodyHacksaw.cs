@@ -8,8 +8,8 @@ namespace BOSpecialItems.Content.Items
     {
         public static void Init()
         {
-            var hacksaw = new GenericItem<BasicWearable>("Bloody Hacksaw", "\"Two into one!\"", "Adds \"Two Into One\" as an additional ability, a weak attack with the ability to merge enemies.", "BloodyHacksaw", ItemPools.Shop, 5);
-            hacksaw.item.staticModifiers = new WearableStaticModifierSetterSO[]
+            var hacksaw = NewItem<BasicWearable>("Bloody Hacksaw", "\"Two into one!\"", "Adds \"Two Into One\" as an additional ability, a weak attack with the ability to merge enemies.", "BloodyHacksaw", ItemPools.Shop, 5);
+            hacksaw.staticModifiers = new WearableStaticModifierSetterSO[]
             {
                 CreateScriptable<ExtraAbility_Wearable_SMS>(x =>
                 {
@@ -85,8 +85,7 @@ namespace BOSpecialItems.Content.Items
                     };
                 })
             };
-            hacksaw.AddItem();
-            hacksaw.item.AttachGadget(GadgetDB.GetGadget("Deck of Wonder"));
+            hacksaw.AttachGadget(GadgetDB.GetGadget("Deck of Wonder"));
         }
     }
 }

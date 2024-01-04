@@ -4,8 +4,8 @@
     {
         public static void Init()
         {
-            var targetter = new GenericItem<BasicWearable>("Eyepatch", "\"Hit the same less often\"", "This party member now has TargetShift (Left) as a passive. Adds \"Retarget\" as an additional ability, an ability that allows this party member to change their TargetShift.", "Eyepatch", ItemPools.Treasure);
-            targetter.item.staticModifiers = new WearableStaticModifierSetterSO[]
+            var targetter = NewItem<BasicWearable>("Eyepatch", "\"Hit the same less often\"", "This party member now has TargetShift (Left) as a passive. Adds \"Retarget\" as an additional ability, an ability that allows this party member to change their TargetShift.", "Eyepatch", ItemPools.Treasure);
+            targetter.staticModifiers = new WearableStaticModifierSetterSO[]
             {
                 CreateScriptable<ExtraPassiveAbility_Wearable_SMS>(x =>
                 {
@@ -22,7 +22,7 @@
                         ability = CreateScriptable<AbilitySO>(x =>
                         {
                             x.abilitySprite = LoadSprite("AttackIcon_Retarget");
-                            x.visuals = BrutalAPIPlugin.slapCharAbility.ability.visuals;
+                            x.visuals = LoadedAssetsHandler.GetCharacterAbility("Slap_A").visuals;
                             x._abilityName = "Retarget";
                             x._description = "Remove TargetShift (Left) and TargetShift (Right) from this party member.\nIf TargetShift (Left) was removed, add TargetShift (Right) to this party member. Otherwise, add TargetShift (Left).";
                             x.animationTarget = TargettingLibrary.ThisSlot;
@@ -92,8 +92,7 @@
                     };
                 })
             };
-            targetter.AddItem();
-            targetter.item.AttachGadget(GadgetDB.GetGadget("Deck of Wonder"));
+            targetter.AttachGadget(GadgetDB.GetGadget("Deck of Wonder"));
         }
     }
 }

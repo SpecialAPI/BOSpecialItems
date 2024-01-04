@@ -1,5 +1,4 @@
 ﻿global using BepInEx;
-global using BrutalAPI;
 global using UnityEngine;
 global using System.Reflection;
 global using HarmonyLib;
@@ -9,11 +8,9 @@ global using System.Collections;
 global using System.Linq;
 global using MUtility;
 
-global using BrutalAPIPlugin = BrutalAPI.BrutalAPI;
 global using Object = UnityEngine.Object;
 global using Random = UnityEngine.Random;
 global using Debug = UnityEngine.Debug;
-global using Passives = BrutalAPI.Passives;
 
 global using BOSpecialItems.Content;
 global using BOSpecialItems.Content.Additional;
@@ -41,7 +38,7 @@ using FMODUnity;
 namespace BOSpecialItems
 {
     [BepInPlugin(GUID, "SpecialAPI's Stuff Pack", "1.0.1")]
-    [BepInDependency("Bones404.BrutalAPI", BepInDependency.DependencyFlags.HardDependency)]
+    //[BepInDependency("Bones404.BrutalAPI", BepInDependency.DependencyFlags.HardDependency)]
     [HarmonyPatch]
     public class Plugin : BaseUnityPlugin
     {
@@ -55,6 +52,9 @@ namespace BOSpecialItems
             LoadFMODBankFromResource("BOSpecialItems.strings");
 
             ChangeHealthColorButtonHolder.disabledSprite = LoadSprite("UI_ManaToggle_Disabled", 32);
+
+            Pigments.Init();
+            Passives.Init();
 
             new Harmony(GUID).PatchAll();
 
@@ -88,6 +88,7 @@ namespace BOSpecialItems
             RipAndTear.Init();
             ConjoinedFungi.Init();
             PetrifiedMedicine.Init();
+            AllSeeingEye.Init();
 
             AddPassive("TargetShift", "All abilities performed by this party member/enemy are performed as if the caster is on the space to the right/left/far right/far left of them.", "TargetShift");
             AddPassive("Pigment Core", "Unlocks the ability to change the colour of this party member's/enemy's health color through a button to the right of it's health bar.", "UntetheredHealthColor");

@@ -8,8 +8,8 @@ namespace BOSpecialItems.Content.Items
     {
         public static void Init()
         {
-            var tiderunner = new GenericItem<TheTiderunnerWearable>("The Tiderunner", "\"Smooth Sailing\"", "After performing the leftmost action, move this party member to the left.\nAfter performing the rightmost action, move this party member to the right.\nMoves \"Slap\" 1 slot to the right.", "TheTiderunner", ItemPools.Treasure);
-            tiderunner.item.leftEffects = new EffectInfo[]
+            var tiderunner = NewItem<TheTiderunnerWearable>("The Tiderunner", "\"Smooth Sailing\"", "After performing the leftmost action, move this party member to the left.\nAfter performing the rightmost action, move this party member to the right.\nMoves \"Slap\" 1 slot to the right.", "TheTiderunner", ItemPools.Treasure);
+            tiderunner.leftEffects = new EffectInfo[]
             {
                 new()
                 {
@@ -22,7 +22,7 @@ namespace BOSpecialItems.Content.Items
                     targets = TargettingLibrary.ThisSlot
                 }
             };
-            tiderunner.item.rightEffects = new EffectInfo[]
+            tiderunner.rightEffects = new EffectInfo[]
             {
                 new()
                 {
@@ -35,16 +35,15 @@ namespace BOSpecialItems.Content.Items
                     targets = TargettingLibrary.ThisSlot
                 }
             };
-            tiderunner.item.staticModifiers = new WearableStaticModifierSetterSO[]
+            tiderunner.staticModifiers = new WearableStaticModifierSetterSO[]
             {
                 CreateScriptable<ExtraPassiveAbility_Wearable_SMS>(x =>
                 {
                     x._extraPassiveAbility = CreateScriptable<MoveSlapRightFlag>();
                 })
             };
-            tiderunner.item.doesItemPopUp = false;
-            tiderunner.AddItem();
-            tiderunner.item.AttachGadget(GadgetDB.GetGadget("Ram"));
+            tiderunner.doesItemPopUp = false;
+            tiderunner.AttachGadget(GadgetDB.GetGadget("Ram"));
         }
     }
 }

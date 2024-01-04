@@ -8,14 +8,14 @@ namespace BOSpecialItems.Content.Items
     {
         public static void Init()
         {
-            var warriorDice = new GenericItem<BasicWearable>("Combat Dice", "\"Or is it called a douse?\"", "Replaces \"Slap\" with \"Combat Roll\", a pigment rerolling ability with a chance to refresh.\nAdds \"Fury\" as an additional ability, an ability that applies Fury to this party member.", "CombatDice", ItemPools.Treasure);
-            warriorDice.item.staticModifiers = new WearableStaticModifierSetterSO[]
+            var warriorDice = NewItem<BasicWearable>("Combat Dice", "\"Or is it called a douse?\"", "Replaces \"Slap\" with \"Combat Roll\", a pigment rerolling ability with a chance to refresh.\nAdds \"Fury\" as an additional ability, an ability that applies Fury to this party member.", "CombatDice", ItemPools.Treasure);
+            warriorDice.staticModifiers = new WearableStaticModifierSetterSO[]
             {
                 CreateScriptable<BasicAbilityChange_Wearable_SMS>(x =>
                 {
                     x._basicAbility = new()
                     {
-                        cost = new ManaColorSO[] { Pigments.Gray },
+                        cost = new ManaColorSO[] { Pigments.Grey },
                         ability = CreateScriptable<AbilitySO>(x =>
                         {
                             x._abilityName = "Combat Roll";
@@ -104,8 +104,7 @@ namespace BOSpecialItems.Content.Items
                     };
                 })
             };
-            warriorDice.AddItem();
-            warriorDice.item.AttachGadget(GadgetDB.GetGadget("Deck of Wonder"));
+            warriorDice.AttachGadget(GadgetDB.GetGadget("Deck of Wonder"));
         }
     }
 }

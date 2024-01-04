@@ -9,16 +9,16 @@ namespace BOSpecialItems.Content.Items
 
         public static void Init()
         {
-            var untetheredHealthItem = new GenericItem<PerformEffectWearable>("Artist's Palette", "\"Primary Colors\"", "Adds Untethered Core to this party member as a passive.\nAt the beginning of combat, add Untethered Core to the opposing enemy as a passive.\nCore allows health color to be toggled to other colors.", "Palette", ItemPools.Treasure);
-            untetheredHealthItem.item.staticModifiers = new WearableStaticModifierSetterSO[]
+            var untetheredHealthItem = NewItem<PerformEffectWearable>("Artist's Palette", "\"Primary Colors\"", "Adds Untethered Core to this party member as a passive.\nAt the beginning of combat, add Untethered Core to the opposing enemy as a passive.\nCore allows health color to be toggled to other colors.", "Palette", ItemPools.Treasure);
+            untetheredHealthItem.staticModifiers = new WearableStaticModifierSetterSO[]
             {
                 CreateScriptable<ExtraPassiveAbility_Wearable_SMS>(x =>
                 {
                     x._extraPassiveAbility = CustomPassives.UntetheredHealth;
                 })
             };
-            untetheredHealthItem.item.triggerOn = TriggerCalls.OnCombatStart;
-            untetheredHealthItem.item.effects = new EffectInfo[]
+            untetheredHealthItem.triggerOn = TriggerCalls.OnCombatStart;
+            untetheredHealthItem.effects = new EffectInfo[]
             {
                 new()
                 {
@@ -28,8 +28,7 @@ namespace BOSpecialItems.Content.Items
                     targets = TargettingLibrary.OpposingSlot
                 }
             };
-            untetheredHealthItem.AddItem();
-            untetheredHealthItem.item.AttachGadget(GadgetDB.GetGadget("Flood"));
+            untetheredHealthItem.AttachGadget(GadgetDB.GetGadget("Flood"));
         }
     }
 }

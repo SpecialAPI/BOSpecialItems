@@ -40,7 +40,7 @@ namespace BOSpecialItems.Content.Effects
 					}
                     if (!success)
                     {
-						cc.TryPerformRandomAbility(BrutalAPIPlugin.slapCharAbility.ability);
+						cc.TryPerformRandomAbility(LoadedAssetsHandler.GetCharacterAbility("Slap_A"));
                     }
 				}
 			}

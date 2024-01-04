@@ -1,5 +1,4 @@
-﻿using BrutalAPI;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -15,10 +14,10 @@ namespace BOSpecialItems.Content.Items
                 x.wasSuccessful = true;
             });
 
-            var pirouetteItem = new GenericItem<BasicWearable>("Jester Hat", "\"Can do anything\"", "This party member has Skittish as a passive.\nAdds \"Pirouette\" as an additional ability, a damaging ability with a different additional effect each turn.", "JesterHat", ItemPools.Treasure);
-            pirouetteItem.item.staticModifiers = new WearableStaticModifierSetterSO[]
+            var pirouetteItem = NewItem<BasicWearable>("Jester Hat", "\"Can do anything\"", "This party member has Skittish as a passive.\nAdds \"Pirouette\" as an additional ability, a damaging ability with a different additional effect each turn.", "JesterHat", ItemPools.Treasure);
+            pirouetteItem.staticModifiers = new WearableStaticModifierSetterSO[]
             {
-                CreateScriptable<ExtraPassiveAbility_Wearable_SMS>(x => x._extraPassiveAbility = Passives.Skittish),
+                CreateScriptable<ExtraPassiveAbility_Wearable_SMS>(x => x._extraPassiveAbility = Passives.Skittish()),
                 CreateScriptable<ExtraAbility_Wearable_SMS>(x => x._extraAbility = new()
                 {
                     cost = new ManaColorSO[]
@@ -207,8 +206,7 @@ namespace BOSpecialItems.Content.Items
                     })
                 })
             };
-            pirouetteItem.AddItem();
-            pirouetteItem.item.AttachGadget(GadgetDB.GetGadget("Deck of Wonder"));
+            pirouetteItem.AttachGadget(GadgetDB.GetGadget("Deck of Wonder"));
         }
     }
 }
