@@ -360,7 +360,7 @@ namespace BOSpecialItems
             }
         }
 
-        public static void AddStatus(StatusEffectInfoSO info)
+        public static void AddGlossaryStatusEffect(StatusEffectInfoSO info)
         {
             if(glossaryDB != null)
             {
@@ -372,7 +372,7 @@ namespace BOSpecialItems
             }
         }
 
-        public static void AddField(SlotStatusEffectInfoSO info)
+        public static void AddGlossaryFieldEffect(SlotStatusEffectInfoSO info)
         {
             if (glossaryDB != null)
             {
@@ -384,7 +384,7 @@ namespace BOSpecialItems
             }
         }
 
-        public static void AddKeyword(string kwName, string description)
+        public static void AddGlossaryKeyword(string kwName, string description)
         {
             var kw = new GlossaryKeywords()
             {
@@ -402,7 +402,7 @@ namespace BOSpecialItems
             }
         }
 
-        public static void AddPassive(string name, string description, string sprite)
+        public static void AddGlossaryPassive(string name, string description, string sprite)
         {
             var pas = new GlossaryPassives()
             {

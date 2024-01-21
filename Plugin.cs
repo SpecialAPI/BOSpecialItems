@@ -53,6 +53,17 @@ namespace BOSpecialItems
 
             ChangeHealthColorButtonHolder.disabledSprite = LoadSprite("UI_ManaToggle_Disabled", 32);
 
+            glossaryDB = Resources.FindObjectsOfTypeAll<GlossaryDataBase>().FirstOrDefault();
+            infoHolder = Resources.FindObjectsOfTypeAll<GameInformationHolder>().FirstOrDefault();
+            if(infoHolder != null)
+            {
+                itemPool = infoHolder.ItemPoolDB;
+            }
+            if(itemPool == null)
+            {
+                itemPool = Resources.FindObjectsOfTypeAll<ItemPoolDataBaseSO>().FirstOrDefault();
+            }
+
             Pigments.Init();
             Passives.Init();
 
@@ -64,6 +75,10 @@ namespace BOSpecialItems
             AddNewGenericEffect<WeakenedStatusEffect>("Weakened", "Weakened party members are 1 level lower than they would be otherwise for each point of Weakened.\nDamage dealt by Weakened enemies is multiplied by 0.85 for each point of Weakened.\n1 point of Weakened is lost at the end of each turn.", "Weaken", "event:/WeakenApply");
             AddNewGenericEffect<SurviveStatusEffect>("Survive", "Survive 1 fatal hit for each point of Survive.", "Survive", "event:/Combat/StatusEffects/SE_Divine_Apl");
             AddNewGenericEffect<PoweredUpStatusEffect>("Powered Up", "Powered Up party members are 1 level higher than they would be otherwise for each point of Powered Up.\nDamage dealt by Powered Up enemies is increased by 25% for each point of Powered Up.\n1 point of Powered Up is lost at the end of each turn.", "PoweredUp", "event:/Combat/StatusEffects/SE_Divine_Apl");
+            AddNewGenericEffect<MovementChargeStatusEffect>("Movement Charge", "When a party member with Movement Charge manually moves to a new position, attempt to refresh their movemnt and decrease Movement Charge by 1.\nAll Movement Charge is loast at the end of each turn.", "MovementCharge");
+
+            AddNewGenericEffect<JumpChargeStatusEffect>("Jump Charge", "When a party member with Jump Charge manually moves to a new position, deal 10 damage to the opposing enemy, move the left and right party members away from their new position and reduce Jump Charge by 1.", "JumpCharge", "event:/FuryApply", addToGlossary: false);
+            AddNewGenericEffect<RamChargeStatusEffect>("Ram Charge", "When a party member with Ram Charge manually moves to a new position, deal 10 damage to the opposing enemy, and move it as far away from the party member's old position as possible.", "RamCharge", "event:/FuryApply", addToGlossary: false);
 
             CustomStoredValues.Init();
             CustomPassives.Init();
@@ -89,13 +104,19 @@ namespace BOSpecialItems
             ConjoinedFungi.Init();
             PetrifiedMedicine.Init();
             AllSeeingEye.Init();
+            InterdimensionalShapeshifter.Init();
+            AllAbilitiesAbilityItem.Init();
 
-            AddPassive("TargetShift", "All abilities performed by this party member/enemy are performed as if the caster is on the space to the right/left/far right/far left of them.", "TargetShift");
-            AddPassive("Pigment Core", "Unlocks the ability to change the colour of this party member's/enemy's health color through a button to the right of it's health bar.", "UntetheredHealthColor");
-            AddPassive("Merged", "This enemy will perform an additional ability for each enemy merged into it.", "Merged");
+            Widewak.Init();
 
-            AddKeyword("Dry Damage", "Dry damage is direct damage that doesn't generate pigment.");
-            AddKeyword("Reliable Damage", "Reliable damage always deals the same amount of damage, regardless of any passives, items, status effects or field effects. It will still \"trigger\" effects that would normally modify damage dealt, such as reducing frail and shield or dealing damage to other enemies if the target has divine protection.");
+            AddGlossaryPassive("TargetShift", "All abilities performed by this party member/enemy are performed as if the caster is on the space to the right/left/far right/far left of them.", "TargetShift");
+            AddGlossaryPassive("Pigment Core", "Unlocks the ability to change the colour of this party member's/enemy's health color through a button to the right of it's health bar.", "UntetheredHealthColor");
+            AddGlossaryPassive("Merged", "This enemy will perform an additional ability for each enemy merged into it.", "Merged");
+            AddGlossaryPassive("Shape-Shifter", "At the start of each turn, unequip this party member's held item and equip a random treasure item. Attempt to trigger that item's on combat start effects. If this passive ability was granted by an item, it will not be removed when the item is unequipped in combat.", "Shapeshifter");
+
+            AddGlossaryKeyword("Dry Damage", "Dry damage is direct damage that doesn't generate pigment.");
+            AddGlossaryKeyword("Wet Damage", "Wet damage is indirect damage that generates pigment.");
+            AddGlossaryKeyword("Reliable Damage", "Reliable damage always deals the same amount of damage, regardless of any passives, items, status effects or field effects. It will still \"trigger\" effects that would normally modify damage dealt, such as reducing frail and shield or dealing damage to other enemies if the target has divine protection.");
         }
     }
 }

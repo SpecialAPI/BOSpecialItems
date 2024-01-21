@@ -16,6 +16,17 @@
     <None Remove="FMODAssets\Desktop\BOSpecialItems.bank" />
     <None Remove="FMODAssets\Desktop\BOSpecialItems.strings.bank" />
     <None Remove="Resources\ArtOfViolence.png" />
+    <None Remove="Resources\AttackIcons\AttackIcon_BabaThrow.png" />
+    <None Remove="Resources\AttackIcons\AttackIcon_Bash.png" />
+    <None Remove="Resources\AttackIcons\AttackIcon_BirdFly.png" />
+    <None Remove="Resources\AttackIcons\AttackIcon_CrabSnipSnap.png" />
+    <None Remove="Resources\AttackIcons\AttackIcon_Everything.png" />
+    <None Remove="Resources\AttackIcons\AttackIcon_FofoTractor.png" />
+    <None Remove="Resources\AttackIcons\AttackIcon_ItJump.png" />
+    <None Remove="Resources\AttackIcons\AttackIcon_JijiCharge.png" />
+    <None Remove="Resources\AttackIcons\AttackIcon_KekeKick.png" />
+    <None Remove="Resources\AttackIcons\AttackIcon_MeBomb.png" />
+    <None Remove="Resources\AttackIcons\AttackIcon_Worm.png" />
     <None Remove="Resources\AttackIcon_CombatRoll.png" />
     <None Remove="Resources\AttackIcon_EOTU.png" />
     <None Remove="Resources\AttackIcon_Fury.png" />
@@ -26,6 +37,33 @@
     <None Remove="Resources\berserk.png" />
     <None Remove="Resources\BloodyHacksaw.png" />
     <None Remove="Resources\BlueHealthColor.png" />
+    <None Remove="Resources\Characters\MSBCharacters\Baba.png" />
+    <None Remove="Resources\Characters\MSBCharacters\BabaBack.png" />
+    <None Remove="Resources\Characters\MSBCharacters\BabaOW.png" />
+    <None Remove="Resources\Characters\MSBCharacters\Bird.png" />
+    <None Remove="Resources\Characters\MSBCharacters\BirdBack.png" />
+    <None Remove="Resources\Characters\MSBCharacters\BirdOW.png" />
+    <None Remove="Resources\Characters\MSBCharacters\Crab.png" />
+    <None Remove="Resources\Characters\MSBCharacters\CrabBack.png" />
+    <None Remove="Resources\Characters\MSBCharacters\CrabOW.png" />
+    <None Remove="Resources\Characters\MSBCharacters\Fofo.png" />
+    <None Remove="Resources\Characters\MSBCharacters\FofoBack.png" />
+    <None Remove="Resources\Characters\MSBCharacters\FofoOW.png" />
+    <None Remove="Resources\Characters\MSBCharacters\It.png" />
+    <None Remove="Resources\Characters\MSBCharacters\ItBack.png" />
+    <None Remove="Resources\Characters\MSBCharacters\ItOW.png" />
+    <None Remove="Resources\Characters\MSBCharacters\Jiji.png" />
+    <None Remove="Resources\Characters\MSBCharacters\JijiBack.png" />
+    <None Remove="Resources\Characters\MSBCharacters\JijiOW.png" />
+    <None Remove="Resources\Characters\MSBCharacters\Keke.png" />
+    <None Remove="Resources\Characters\MSBCharacters\KekeBack.png" />
+    <None Remove="Resources\Characters\MSBCharacters\KekeOW.png" />
+    <None Remove="Resources\Characters\MSBCharacters\Me.png" />
+    <None Remove="Resources\Characters\MSBCharacters\MeBack.png" />
+    <None Remove="Resources\Characters\MSBCharacters\MeOW.png" />
+    <None Remove="Resources\Characters\MSBCharacters\Worm.png" />
+    <None Remove="Resources\Characters\MSBCharacters\WormBack.png" />
+    <None Remove="Resources\Characters\MSBCharacters\WormOW.png" />
     <None Remove="Resources\CombatDice.png" />
     <None Remove="Resources\ConjoinedFungi.png" />
     <None Remove="Resources\Eyepatch.png" />
@@ -34,12 +72,15 @@
     <None Remove="Resources\Intent_FuckYou.png" />
     <None Remove="Resources\Items\AllSeeingEye.png" />
     <None Remove="Resources\Items\AlmightyBranch.png" />
+    <None Remove="Resources\Items\InterdimensionalShapeshifter.png" />
     <None Remove="Resources\JesterHat.png" />
     <None Remove="Resources\LoudPhone.png" />
     <None Remove="Resources\MagickalBleach.png" />
     <None Remove="Resources\Merged.png" />
     <None Remove="Resources\overdrive.png" />
     <None Remove="Resources\Palette.png" />
+    <None Remove="Resources\Passive\Bloom.png" />
+    <None Remove="Resources\Passive\Shapeshifter.png" />
     <None Remove="Resources\PetrifiedMedicine.png" />
     <None Remove="Resources\Pigments\Blue\BlueMana.png" />
     <None Remove="Resources\Pigments\Blue\BlueManaCostSelected.png" />
@@ -90,6 +131,9 @@
     <None Remove="Resources\RedHealthColor.png" />
     <None Remove="Resources\RipAndTear.png" />
     <None Remove="Resources\SilverMirror.png" />
+    <None Remove="Resources\Status\JumpCharge.png" />
+    <None Remove="Resources\Status\MovementCharge.png" />
+    <None Remove="Resources\Status\RamCharge.png" />
     <None Remove="Resources\Survive.png" />
     <None Remove="Resources\Survivorship.png" />
     <None Remove="Resources\targetshift.png" />
@@ -104,6 +148,9 @@
     <None Remove="Resources\Ui_ManaToggle_Disabled.png" />
     <None Remove="Resources\UntetheredHealthColor.png" />
     <None Remove="Resources\weaken.png" />
+    <None Remove="Resources\widewak.png" />
+    <None Remove="Resources\widewak_back.png" />
+    <None Remove="Resources\widewak_overworld.png" />
     <None Remove="Resources\WorldShatter.png" />
     <None Remove="Resources\YellowHealthColor.png" />
   </ItemGroup>
@@ -111,6 +158,44 @@
   <ItemGroup>
     <EmbeddedResource Include="FMODAssets\Desktop\BOSpecialItems.bank" />
     <EmbeddedResource Include="FMODAssets\Desktop\BOSpecialItems.strings.bank" />
+    <EmbeddedResource Include="Resources\AttackIcons\AttackIcon_BabaThrow.png" />
+    <EmbeddedResource Include="Resources\AttackIcons\AttackIcon_Bash.png" />
+    <EmbeddedResource Include="Resources\AttackIcons\AttackIcon_BirdFly.png" />
+    <EmbeddedResource Include="Resources\AttackIcons\AttackIcon_CrabSnipSnap.png" />
+    <EmbeddedResource Include="Resources\AttackIcons\AttackIcon_Everything.png" />
+    <EmbeddedResource Include="Resources\AttackIcons\AttackIcon_FofoTractor.png" />
+    <EmbeddedResource Include="Resources\AttackIcons\AttackIcon_ItJump.png" />
+    <EmbeddedResource Include="Resources\AttackIcons\AttackIcon_JijiCharge.png" />
+    <EmbeddedResource Include="Resources\AttackIcons\AttackIcon_KekeKick.png" />
+    <EmbeddedResource Include="Resources\AttackIcons\AttackIcon_MeBomb.png" />
+    <EmbeddedResource Include="Resources\AttackIcons\AttackIcon_Worm.png" />
+    <EmbeddedResource Include="Resources\Characters\MSBCharacters\Baba.png" />
+    <EmbeddedResource Include="Resources\Characters\MSBCharacters\BabaBack.png" />
+    <EmbeddedResource Include="Resources\Characters\MSBCharacters\BabaOW.png" />
+    <EmbeddedResource Include="Resources\Characters\MSBCharacters\Bird.png" />
+    <EmbeddedResource Include="Resources\Characters\MSBCharacters\BirdBack.png" />
+    <EmbeddedResource Include="Resources\Characters\MSBCharacters\BirdOW.png" />
+    <EmbeddedResource Include="Resources\Characters\MSBCharacters\Crab.png" />
+    <EmbeddedResource Include="Resources\Characters\MSBCharacters\CrabBack.png" />
+    <EmbeddedResource Include="Resources\Characters\MSBCharacters\CrabOW.png" />
+    <EmbeddedResource Include="Resources\Characters\MSBCharacters\Fofo.png" />
+    <EmbeddedResource Include="Resources\Characters\MSBCharacters\FofoBack.png" />
+    <EmbeddedResource Include="Resources\Characters\MSBCharacters\FofoOW.png" />
+    <EmbeddedResource Include="Resources\Characters\MSBCharacters\It.png" />
+    <EmbeddedResource Include="Resources\Characters\MSBCharacters\ItBack.png" />
+    <EmbeddedResource Include="Resources\Characters\MSBCharacters\ItOW.png" />
+    <EmbeddedResource Include="Resources\Characters\MSBCharacters\Jiji.png" />
+    <EmbeddedResource Include="Resources\Characters\MSBCharacters\JijiBack.png" />
+    <EmbeddedResource Include="Resources\Characters\MSBCharacters\JijiOW.png" />
+    <EmbeddedResource Include="Resources\Characters\MSBCharacters\Keke.png" />
+    <EmbeddedResource Include="Resources\Characters\MSBCharacters\KekeBack.png" />
+    <EmbeddedResource Include="Resources\Characters\MSBCharacters\KekeOW.png" />
+    <EmbeddedResource Include="Resources\Characters\MSBCharacters\Me.png" />
+    <EmbeddedResource Include="Resources\Characters\MSBCharacters\MeBack.png" />
+    <EmbeddedResource Include="Resources\Characters\MSBCharacters\MeOW.png" />
+    <EmbeddedResource Include="Resources\Characters\MSBCharacters\Worm.png" />
+    <EmbeddedResource Include="Resources\Characters\MSBCharacters\WormBack.png" />
+    <EmbeddedResource Include="Resources\Characters\MSBCharacters\WormOW.png" />
     <EmbeddedResource Include="Resources\Items\AllSeeingEye.png" />
     <EmbeddedResource Include="Resources\Items\AlmightyBranch.png" />
     <EmbeddedResource Include="Resources\Items\ArtOfViolence.png" />
@@ -119,6 +204,9 @@
     <EmbeddedResource Include="Resources\AttackIcons\AttackIcon_Fury.png" />
     <EmbeddedResource Include="Resources\AttackIcons\AttackIcon_Mirror.png" />
     <EmbeddedResource Include="Resources\AttackIcons\AttackIcon_TwoIntoOne.png" />
+    <EmbeddedResource Include="Resources\Items\InterdimensionalShapeshifter.png" />
+    <EmbeddedResource Include="Resources\Passive\Bloom.png" />
+    <EmbeddedResource Include="Resources\Passive\Shapeshifter.png" />
     <EmbeddedResource Include="Resources\Pigments\Blue\BlueMana.png" />
     <EmbeddedResource Include="Resources\Pigments\Blue\BlueManaCostSelected.png" />
     <EmbeddedResource Include="Resources\Pigments\Blue\BlueManaCostUnselected.png" />
@@ -174,6 +262,8 @@
     <EmbeddedResource Include="Resources\Items\LoudPhone.png" />
     <EmbeddedResource Include="Resources\Items\MagickalBleach.png" />
     <EmbeddedResource Include="Resources\Passive\Merged.png" />
+    <EmbeddedResource Include="Resources\Status\JumpCharge.png" />
+    <EmbeddedResource Include="Resources\Status\MovementCharge.png" />
     <EmbeddedResource Include="Resources\Status\Overdrive.png" />
     <EmbeddedResource Include="Resources\Items\Palette.png" />
     <EmbeddedResource Include="Resources\Items\PetrifiedMedicine.png" />
@@ -188,6 +278,7 @@
     <EmbeddedResource Include="Resources\Passive\RedHealthColor.png" />
     <EmbeddedResource Include="Resources\Items\RipAndTear.png" />
     <EmbeddedResource Include="Resources\Items\SilverMirror.png" />
+    <EmbeddedResource Include="Resources\Status\RamCharge.png" />
     <EmbeddedResource Include="Resources\Status\Survive.png" />
     <EmbeddedResource Include="Resources\Items\Survivorship.png" />
     <EmbeddedResource Include="Resources\Passive\TargetShift.png" />
@@ -204,6 +295,9 @@
     <EmbeddedResource Include="Resources\Status\Weaken.png" />
     <EmbeddedResource Include="Resources\Items\WorldShatter.png" />
     <EmbeddedResource Include="Resources\Passive\YellowHealthColor.png" />
+    <EmbeddedResource Include="Resources\widewak.png" />
+    <EmbeddedResource Include="Resources\widewak_back.png" />
+    <EmbeddedResource Include="Resources\widewak_overworld.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -217,22 +311,19 @@
 
   <ItemGroup>
     <Reference Include="Assembly-CSharp">
-      <HintPath>..\..\..\Program Files\Steam\steamapps\common\Brutal Orchestra\BrutalOrchestra_Data\Managed\public\Assembly-CSharp.dll</HintPath>
+      <HintPath>..\..\..\Program Files (x86)\Steam\steamapps\common\Brutal Orchestra\BrutalOrchestra_Data\Managed\public\Assembly-CSharp.dll</HintPath>
     </Reference>
     <Reference Include="FMODUnity">
-      <HintPath>..\..\..\Program Files\Steam\steamapps\common\Brutal Orchestra\BrutalOrchestra_Data\Managed\public\FMODUnity.dll</HintPath>
+      <HintPath>..\..\..\Program Files (x86)\Steam\steamapps\common\Brutal Orchestra\BrutalOrchestra_Data\Managed\public\FMODUnity.dll</HintPath>
     </Reference>
     <Reference Include="Marosi.SerializableCollections">
-      <HintPath>..\..\..\Program Files\Steam\steamapps\common\Brutal Orchestra\BrutalOrchestra_Data\Managed\Marosi.SerializableCollections.dll</HintPath>
+      <HintPath>..\..\..\Program Files (x86)\Steam\steamapps\common\Brutal Orchestra\BrutalOrchestra_Data\Managed\Marosi.SerializableCollections.dll</HintPath>
     </Reference>
     <Reference Include="Marosi.Utility">
-      <HintPath>..\..\..\Program Files\Steam\steamapps\common\Brutal Orchestra\BrutalOrchestra_Data\Managed\Marosi.Utility.dll</HintPath>
+      <HintPath>..\..\..\Program Files (x86)\Steam\steamapps\common\Brutal Orchestra\BrutalOrchestra_Data\Managed\Marosi.Utility.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.UI">
-      <HintPath>..\..\..\Program Files\Steam\steamapps\common\Brutal Orchestra\BrutalOrchestra_Data\Managed\UnityEngine.UI.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.UIModule">
-      <HintPath>..\..\..\Program Files\Steam\steamapps\common\Brutal Orchestra\BrutalOrchestra_Data\Managed\UnityEngine.UIModule.dll</HintPath>
+      <HintPath>..\..\..\Program Files (x86)\Steam\steamapps\common\Brutal Orchestra\BrutalOrchestra_Data\Managed\UnityEngine.UI.dll</HintPath>
     </Reference>
   </ItemGroup>
 

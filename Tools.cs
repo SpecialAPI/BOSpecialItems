@@ -380,9 +380,9 @@ namespace BOSpecialItems
 
                 if (pools.HasFlag(ItemPools.Shop))
                 {
-                    if(itemdb != null)
+                    if(itemPool != null)
                     {
-                        itemdb._ShopPool = itemdb._ShopPool.AddToArray(x.name);
+                        itemPool._ShopPool = itemPool._ShopPool.AddToArray(x.name);
                     }
                     else
                     {
@@ -391,9 +391,9 @@ namespace BOSpecialItems
                 }
                 if (pools.HasFlag(ItemPools.Treasure))
                 {
-                    if (itemdb != null)
+                    if (itemPool != null)
                     {
-                        itemdb._TreasurePool = itemdb._TreasurePool.AddToArray(x.name);
+                        itemPool._TreasurePool = itemPool._TreasurePool.AddToArray(x.name);
                     }
                     else
                     {
@@ -415,19 +415,44 @@ namespace BOSpecialItems
         [HarmonyPrefix]
         public static void AddItemsToPool(ItemPoolDataBaseSO __instance)
         {
-            if(itemdb == null)
+            if(itemPool == null)
             {
-                itemdb = __instance;
+                itemPool = __instance;
 
-                itemdb._TreasurePool = itemdb._TreasurePool.Concat(treasuresToAdd).ToArray();
-                itemdb._ShopPool = itemdb._ShopPool.Concat(shopItemsToAdd).ToArray();
+                itemPool._TreasurePool = itemPool._TreasurePool.Concat(treasuresToAdd).ToArray();
+                itemPool._ShopPool = itemPool._ShopPool.Concat(shopItemsToAdd).ToArray();
 
                 treasuresToAdd.Clear();
                 shopItemsToAdd.Clear();
             }
         }
 
-        private static ItemPoolDataBaseSO itemdb;
+        public static BaseWearableSO GetTotallyRandomTreasure()
+        {
+            if (itemPool == null)
+            {
+                Debug.Log("itempool is null... somehow?");
+                return null;
+            }
+            else
+            {
+                var items = new List<string>(itemPool.TreasurePool);
+                while (items.Count > 0)
+                {
+                    var idx = Random.Range(0, items.Count);
+                    var stuff = LoadedAssetsHandler.GetWearable(items[idx]);
+                    items.RemoveAt(idx);
+                    if(stuff != null && (!stuff.startsLocked || infoHolder == null || infoHolder.Game == null || infoHolder.Game.IsItemUnlocked(stuff.name)))
+                    {
+                        return stuff;
+                    }
+                }
+                return null;
+            }
+        }
+
+        public static ItemPoolDataBaseSO itemPool;
+        public static GameInformationHolder infoHolder;
 
         private static readonly List<string> shopItemsToAdd = new();
         private static readonly List<string> treasuresToAdd = new();

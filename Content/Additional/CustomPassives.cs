@@ -19,6 +19,8 @@ namespace BOSpecialItems.Content.Additional
         public static BasePassiveAbilitySO YellowHealth;
         public static BasePassiveAbilitySO PurpleHealth;
 
+        public static BasePassiveAbilitySO Shapeshifter;
+
         public static void Init()
         {
             TargetShift_Left = CreateScriptable<TargetShiftPassive>(x =>
@@ -79,7 +81,7 @@ namespace BOSpecialItems.Content.Additional
                 x._characterDescription = "Allows this party member's health to be toggled to any basic color.";
                 x._enemyDescription = "Allows this enemy's health to be toggled to any basic color.";
                 x.conditions = null;
-                x._triggerOn = new TriggerCalls[] { TriggerCalls.Count };
+                x._triggerOn = new TriggerCalls[0];
                 x.doesPassiveTriggerInformationPanel = true;
                 x.passiveIcon = LoadSprite("UntetheredHealthColor");
                 x.type = ExtendEnum<PassiveAbilityTypes>("UntetheredHealthColor");
@@ -108,7 +110,7 @@ namespace BOSpecialItems.Content.Additional
                 x._characterDescription = "Allows this party member's health to be toggled to red.";
                 x._enemyDescription = "Allows this enemy's health to be toggled to red.";
                 x.conditions = null;
-                x._triggerOn = new TriggerCalls[] { TriggerCalls.Count };
+                x._triggerOn = new TriggerCalls[0];
                 x.doesPassiveTriggerInformationPanel = true;
                 x.passiveIcon = LoadSprite("RedHealthColor");
                 x.type = ExtendEnum<PassiveAbilityTypes>("RedHealthColor");
@@ -134,7 +136,7 @@ namespace BOSpecialItems.Content.Additional
                 x._characterDescription = "Allows this party member's health to be toggled to blue.";
                 x._enemyDescription = "Allows this enemy's health to be toggled to blue.";
                 x.conditions = null;
-                x._triggerOn = new TriggerCalls[] { TriggerCalls.Count };
+                x._triggerOn = new TriggerCalls[0];
                 x.doesPassiveTriggerInformationPanel = true;
                 x.passiveIcon = LoadSprite("BlueHealthColor");
                 x.type = ExtendEnum<PassiveAbilityTypes>("BlueHealthColor");
@@ -160,7 +162,7 @@ namespace BOSpecialItems.Content.Additional
                 x._characterDescription = "Allows this party member's health to be toggled to yellow.";
                 x._enemyDescription = "Allows this enemy's health to be toggled to yellow.";
                 x.conditions = null;
-                x._triggerOn = new TriggerCalls[] { TriggerCalls.Count };
+                x._triggerOn = new TriggerCalls[0];
                 x.doesPassiveTriggerInformationPanel = true;
                 x.passiveIcon = LoadSprite("YellowHealthColor");
                 x.type = ExtendEnum<PassiveAbilityTypes>("YellowHealthColor");
@@ -186,7 +188,7 @@ namespace BOSpecialItems.Content.Additional
                 x._characterDescription = "Allows this party member's health to be toggled to purple.";
                 x._enemyDescription = "Allows this enemy's health to be toggled to purple.";
                 x.conditions = null;
-                x._triggerOn = new TriggerCalls[] { TriggerCalls.Count };
+                x._triggerOn = new TriggerCalls[0];
                 x.doesPassiveTriggerInformationPanel = true;
                 x.passiveIcon = LoadSprite("PurpleHealthColor");
                 x.type = ExtendEnum<PassiveAbilityTypes>("PurpleHealthColor");
@@ -205,6 +207,29 @@ namespace BOSpecialItems.Content.Additional
                 };
                 x.immediateEffect = false;
                 x.disconnectionEffects = new EffectInfo[0];
+            });
+
+            Shapeshifter = CreateScriptable<PerformEffectPassiveAbility>(x =>
+            {
+                x._passiveName = "Shape-Shifter";
+                x._characterDescription = "At the start of each turn, unequip this party member's held item and equip a random treasure item. Attempt to trigger that item's on combat start effects. If this passive ability was granted by an item, it will not be removed when the item is unequipped in combat.";
+                x._enemyDescription = "This passive is not meant for enemies.";
+                x.conditions = null;
+                x._triggerOn = new TriggerCalls[] { TriggerCalls.OnTurnStart };
+                x.doesPassiveTriggerInformationPanel = true;
+                x.passiveIcon = LoadSprite("Shapeshifter");
+                x.type = ExtendEnum<PassiveAbilityTypes>("Shapeshifter");
+
+                x.effects = new EffectInfo[]
+                {
+                    new()
+                    {
+                        condition = null,
+                        effect = CreateScriptable<EquipRandomTreasureEffect>(),
+                        entryVariable = 0,
+                        targets = TargettingLibrary.ThisSlot
+                    }
+                };
             });
         }
     }

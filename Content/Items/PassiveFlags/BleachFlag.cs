@@ -11,18 +11,14 @@ namespace BOSpecialItems.Content.Items.PassiveFlags
         [HarmonyPatch(typeof(CharacterCombat), nameof(CharacterCombat.DefaultPassiveAbilityInitialization))]
         public static bool UseBleach(CharacterCombat __instance)
         {
-            if (__instance.CharacterWearableModifiers.HasFlag<BleachFlag>())
-            {
-                return false;
-            }
-            return true;
+            return !__instance.CharacterWearableModifiers.HasFlag<BleachFlag>();
         }
 
         [HarmonyPostfix]
         [HarmonyPatch(typeof(CharacterCombat), nameof(CharacterCombat.TrySetUpNewItem))]
         public static void GildedMirrorBleach(CharacterCombat __instance, bool __result)
         {
-            if (__result)
+            if (__result && __instance.CharacterWearableModifiers.HasFlag<BleachFlag>())
             {
 				if (__instance.ExternalPassives != null)
 				{

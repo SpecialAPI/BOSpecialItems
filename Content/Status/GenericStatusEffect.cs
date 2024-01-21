@@ -25,7 +25,7 @@ namespace BOSpecialItems.Content.Status
             AddedGenericEffects[typeof(T)] = i;
             if (addToGlossary)
             {
-                AddStatus(i);
+                AddGlossaryStatusEffect(i);
             }
             AddIntent(codename, new IntentInfoBasic()
             {

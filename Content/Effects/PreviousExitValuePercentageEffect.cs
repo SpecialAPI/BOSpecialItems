@@ -8,8 +8,7 @@ namespace BOSpecialItems.Content.Effects
     {
         public override bool PerformEffect(CombatStats stats, IUnit caster, TargetSlotInfo[] targets, bool areTargetSlots, int entryVariable, out int exitAmount)
         {
-            exitAmount = PreviousExitValue * entryVariable / 100;
-            return exitAmount > 0;
+            return (exitAmount = PreviousExitValue * entryVariable / 100) > 0;
         }
     }
 }

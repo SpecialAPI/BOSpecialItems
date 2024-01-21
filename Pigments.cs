@@ -47,7 +47,7 @@ namespace BOSpecialItems
             {
                 x.canGenerateMana = true;
                 x.pigmentType = PigmentType.Green;
-                x.dealsCostDamage = false;
+                x.dealsCostDamage = true;
                 x.healthColor = Color.green;
                 x.manaSprite = LoadSprite("GreenMana");
                 x.manaUsedSprite = LoadSprite("GreenManaUsed");
