@@ -131,22 +131,22 @@
 
   <ItemGroup>
     <Reference Include="Assembly-CSharp">
-      <HintPath>..\..\..\Program Files\Steam\steamapps\common\Brutal Orchestra\BrutalOrchestra_Data\Managed\public\Assembly-CSharp.dll</HintPath>
+      <HintPath>..\..\..\Program Files (x86)\Steam\steamapps\common\Brutal Orchestra\BrutalOrchestra_Data\Managed\public\Assembly-CSharp.dll</HintPath>
     </Reference>
     <Reference Include="BrutalAPI">
-      <HintPath>..\..\..\Program Files\Steam\steamapps\common\Brutal Orchestra\BepInEx\plugins\BrutalAPI.dll</HintPath>
+      <HintPath>..\..\..\Program Files (x86)\Steam\steamapps\common\Brutal Orchestra\BepInEx\plugins\BrutalAPI.dll</HintPath>
     </Reference>
     <Reference Include="FMODUnity">
-      <HintPath>..\..\..\Program Files\Steam\steamapps\common\Brutal Orchestra\BrutalOrchestra_Data\Managed\public\FMODUnity.dll</HintPath>
+      <HintPath>..\..\..\Program Files (x86)\Steam\steamapps\common\Brutal Orchestra\BrutalOrchestra_Data\Managed\public\FMODUnity.dll</HintPath>
     </Reference>
     <Reference Include="Marosi.SerializableCollections">
-      <HintPath>..\..\..\Program Files\Steam\steamapps\common\Brutal Orchestra\BrutalOrchestra_Data\Managed\Marosi.SerializableCollections.dll</HintPath>
+      <HintPath>..\..\..\Program Files (x86)\Steam\steamapps\common\Brutal Orchestra\BrutalOrchestra_Data\Managed\Marosi.SerializableCollections.dll</HintPath>
     </Reference>
     <Reference Include="Marosi.Utility">
-      <HintPath>..\..\..\Program Files\Steam\steamapps\common\Brutal Orchestra\BrutalOrchestra_Data\Managed\Marosi.Utility.dll</HintPath>
+      <HintPath>..\..\..\Program Files (x86)\Steam\steamapps\common\Brutal Orchestra\BrutalOrchestra_Data\Managed\Marosi.Utility.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.UI">
-      <HintPath>..\..\..\Program Files\Steam\steamapps\common\Brutal Orchestra\BrutalOrchestra_Data\Managed\UnityEngine.UI.dll</HintPath>
+      <HintPath>..\..\..\Program Files (x86)\Steam\steamapps\common\Brutal Orchestra\BrutalOrchestra_Data\Managed\UnityEngine.UI.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.UIModule">
       <HintPath>..\..\..\Program Files\Steam\steamapps\common\Brutal Orchestra\BrutalOrchestra_Data\Managed\UnityEngine.UIModule.dll</HintPath>

@@ -22,7 +22,7 @@ namespace BOSpecialItems.Content.Items.PassiveFlags
         [HarmonyPatch(typeof(CharacterCombat), nameof(CharacterCombat.TrySetUpNewItem))]
         public static void GildedMirrorBleach(CharacterCombat __instance, bool __result)
         {
-            if (__result)
+            if (__result && __instance.CharacterWearableModifiers.HasFlag<BleachFlag>())
             {
 				if (__instance.ExternalPassives != null)
 				{
