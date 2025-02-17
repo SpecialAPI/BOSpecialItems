@@ -81,8 +81,7 @@ namespace BOSpecialItems
                     __instance.transform.SetParent(viewport.transform, false);
 
                     var scrollimg = scrollView.AddComponent<Image>();
-                    var tex = LoadTexture("UINineSliceTest_3");
-                    scrollimg.sprite = Sprite.Create(tex, new Rect(0f, 0f, tex.width, tex.height), new Vector2(0.5f, 0.5f), 100, 0, SpriteMeshType.Tight, new(9, 9, 9, 9));
+                    scrollimg.sprite = UISprites.NineSlice_Purple;
                     scrollimg.pixelsPerUnitMultiplier = 0.05f;
                     scrollimg.type = Image.Type.Sliced;
                     var scrollRect = scrollView.AddComponent<ScrollRect>();
@@ -152,8 +151,7 @@ namespace BOSpecialItems
                     __instance.transform.SetParent(viewport.transform, false);
 
                     var scrollimg = scrollView.AddComponent<Image>();
-                    var tex = LoadTexture("UINineSliceTest_3");
-                    scrollimg.sprite = Sprite.Create(tex, new Rect(0f, 0f, tex.width, tex.height), new Vector2(0.5f, 0.5f), 100, 0, SpriteMeshType.Tight, new(9, 9, 9, 9));
+                    scrollimg.sprite = UISprites.NineSlice_Purple;
                     scrollimg.pixelsPerUnitMultiplier = 0.05f;
                     scrollimg.type = Image.Type.Sliced;
                     var scrollRect = scrollView.AddComponent<ScrollRect>();
@@ -225,8 +223,7 @@ namespace BOSpecialItems
                 iconzone.SetParent(viewport.transform, false);
 
                 var scrollimg = scrollView.AddComponent<Image>();
-                var tex = LoadTexture("UINineSliceTest_3");
-                scrollimg.sprite = Sprite.Create(tex, new Rect(0f, 0f, tex.width, tex.height), new Vector2(0.5f, 0.5f), 100, 0, SpriteMeshType.Tight, new(9, 9, 9, 9));
+                scrollimg.sprite = UISprites.NineSlice_Purple;
                 scrollimg.pixelsPerUnitMultiplier = 0.05f;
                 scrollimg.type = Image.Type.Sliced;
                 var scrollRect = scrollView.AddComponent<ScrollRect>();
@@ -325,8 +322,7 @@ namespace BOSpecialItems
                 iconzone.SetParent(viewport.transform, false);
 
                 var scrollimg = scrollView.AddComponent<Image>();
-                var tex = LoadTexture("UINineSliceTest_3");
-                scrollimg.sprite = Sprite.Create(tex, new Rect(0f, 0f, tex.width, tex.height), new Vector2(0.5f, 0.5f), 100, 0, SpriteMeshType.Tight, new(9, 9, 9, 9));
+                scrollimg.sprite = UISprites.NineSlice_Purple;
                 scrollimg.pixelsPerUnitMultiplier = 0.05f;
                 scrollimg.type = Image.Type.Sliced;
                 var scrollRect = scrollView.AddComponent<ScrollRect>();

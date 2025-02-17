@@ -19,6 +19,12 @@ namespace BOSpecialItems.Content.Effects
                     exitAmount += t.Unit.Damage(caster.WillApplyDamage(t.Unit.UnitType == targetUnitType ? damageToUnitType : entryVariable, t.Unit), caster, DeathType.Basic, areTargetSlots ? (t.SlotID - t.Unit.SlotID) : (-1), true, true, false).damageAmount;
                 }
             }
+
+            if(exitAmount > 0)
+            {
+                caster.DidApplyDamage(exitAmount);
+            }
+
             return exitAmount > 0;
         }
     }

@@ -7,21 +7,31 @@ global using System.Reflection.Emit;
 global using System.Collections;
 global using System.Linq;
 global using MUtility;
+global using MonoMod;
+global using MonoMod.Cil;
+global using Mono.Cecil.Cil;
 
 global using Object = UnityEngine.Object;
 global using Random = UnityEngine.Random;
 global using Debug = UnityEngine.Debug;
+global using Color = UnityEngine.Color;
+
+global using OpCodes = System.Reflection.Emit.OpCodes;
+global using MmCodes = Mono.Cecil.Cil.OpCodes;
 
 global using BOSpecialItems.Content;
 global using BOSpecialItems.Content.Additional;
-global using BOSpecialItems.Content.Conditions;
+global using BOSpecialItems.Content.Condition;
+global using BOSpecialItems.Content.Condition.Effector;
 global using BOSpecialItems.Content.Effects;
 global using BOSpecialItems.Content.Items;
 global using BOSpecialItems.Content.Items.PassiveFlags;
 global using BOSpecialItems.Content.Items.Wearables;
+global using BOSpecialItems.Content.Items.Wearables.TriggerEffects;
 global using BOSpecialItems.Content.Passive;
 global using BOSpecialItems.Content.Status;
 global using BOSpecialItems.Content.Extension;
+global using BOSpecialItems.Content.Challenges.Setup;
 
 global using BOSpecialItems.Patches;
 
@@ -43,15 +53,22 @@ namespace BOSpecialItems
     public class Plugin : BaseUnityPlugin
     {
         public const string GUID = "SpecialAPI.BOSpecialItems";
+        public static Harmony harmony;
 
         public void Awake()
         {
             SpecialItemsAssembly = Assembly.GetExecutingAssembly();
+            Tools.Config = Config;
+
+            if (TryReadFromResource("spapibundle", out var ba))
+            {
+                Bundle = AssetBundle.LoadFromMemory(ba);
+            }
+
+            UISprites.Load();
 
             LoadFMODBankFromResource("BOSpecialItems");
             LoadFMODBankFromResource("BOSpecialItems.strings");
-
-            ChangeHealthColorButtonHolder.disabledSprite = LoadSprite("UI_ManaToggle_Disabled", 32);
 
             glossaryDB = Resources.FindObjectsOfTypeAll<GlossaryDataBase>().FirstOrDefault();
             infoHolder = Resources.FindObjectsOfTypeAll<GameInformationHolder>().FirstOrDefault();
@@ -67,7 +84,8 @@ namespace BOSpecialItems
             Pigments.Init();
             Passives.Init();
 
-            new Harmony(GUID).PatchAll();
+            harmony = new Harmony(GUID);
+            harmony.PatchAll();
 
             AddNewGenericEffect<TargetSwapStatusEffect>("TargetSwap", "While TargetSwapped all abilities are performed as if the caster is on the space directly opposing them. Instant kills or fleeing effects are not affected by this.\n1 point of TargetSwap is lost at the end of each turn.", "TargetSwap", "event:/TargetSwapApply");
             AddNewGenericEffect<BerserkStatusEffect>("Berserk", "Deal double damage.\n1 point of Berserk is lost at the end of each turn.", "Berserk", "event:/FuryApply");
@@ -85,7 +103,7 @@ namespace BOSpecialItems
             GadgetDB.Init();
 
             Retargetter.Init();
-            //Converter.Init(); //scrapped (for now at least)
+            Converter.Init();
             FailedRound.Init();
             JesterHat.Init();
             TheTiderunner.Init();
@@ -103,11 +121,18 @@ namespace BOSpecialItems
             RipAndTear.Init();
             ConjoinedFungi.Init();
             PetrifiedMedicine.Init();
-            AllSeeingEye.Init();
+            //AllSeeingEye.Init();
             InterdimensionalShapeshifter.Init();
-            AllAbilitiesAbilityItem.Init();
+            //AllAbilitiesAbilityItem.Init();
+            //OilPaints.Init();
+            StrangeDevice.Init();
+
+            //SchrodingersSeveredHead.Init();
+            NewtonsApple.Init();
 
             Widewak.Init();
+
+            ChallengeDB.FetchDatabase();
 
             AddGlossaryPassive("TargetShift", "All abilities performed by this party member/enemy are performed as if the caster is on the space to the right/left/far right/far left of them.", "TargetShift");
             AddGlossaryPassive("Pigment Core", "Unlocks the ability to change the colour of this party member's/enemy's health color through a button to the right of it's health bar.", "UntetheredHealthColor");
@@ -117,6 +142,11 @@ namespace BOSpecialItems
             AddGlossaryKeyword("Dry Damage", "Dry damage is direct damage that doesn't generate pigment.");
             AddGlossaryKeyword("Wet Damage", "Wet damage is indirect damage that generates pigment.");
             AddGlossaryKeyword("Reliable Damage", "Reliable damage always deals the same amount of damage, regardless of any passives, items, status effects or field effects. It will still \"trigger\" effects that would normally modify damage dealt, such as reducing frail and shield or dealing damage to other enemies if the target has divine protection.");
+        }
+
+        public void Start()
+        {
+            PostInitPatches.Init();
         }
     }
 }

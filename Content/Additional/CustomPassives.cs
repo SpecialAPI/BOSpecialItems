@@ -21,6 +21,49 @@ namespace BOSpecialItems.Content.Additional
 
         public static BasePassiveAbilitySO Shapeshifter;
 
+        public static BasePassiveAbilitySO TargetSwapped;
+        public static BasePassiveAbilitySO Frenzied;
+
+        private static readonly Dictionary<int, BasePassiveAbilitySO> Furiouses = new();
+        private static readonly Dictionary<int, BasePassiveAbilitySO> Weaks = new();
+        private static readonly Dictionary<int, BasePassiveAbilitySO> Energizedses = new();
+
+        public static BasePassiveAbilitySO Furious(int amount)
+        {
+            return Furiouses.LookForOrCreate(amount, a => CreatePassive<FuriousPassiveAbility>($"Furious ({a})", $"Permanently applies Fury ({a}) to self.\nFury makes abilities performed by this {{0}} be repeated for each stack of Fury.", "Furious", x =>
+            {
+                x.amount = a;
+                x.conditions = null;
+                x._triggerOn = new TriggerCalls[0];
+            }, "Furious"));
+        }
+
+        public static BasePassiveAbilitySO Weak(int amount)
+        {
+            return Weaks.LookForOrCreate(amount, a => CreatePassive<WeakPassiveAbility>($"Weak ({a})", $"Permanently applies Weakened ({a}) to self.\n", "Weak", x =>
+            {
+                x.amount = a;
+                x.conditions = null;
+                x._triggerOn = new TriggerCalls[0];
+
+                x._characterDescription += "Weakened makes this party member's abilities act as if they were 1 level lower for each stack of Weakened.";
+                x._enemyDescription += "Weakened multiplies damage dealt by this enemy by 0.85 for each stack of Weakened.";
+            }, "Weak"));
+        }
+
+        public static BasePassiveAbilitySO Energized(int amount)
+        {
+            return Energizedses.LookForOrCreate(amount, a => CreatePassive<EnergizedPassiveAbility>($"Energized ({a})", $"Permanently applies Powered Up ({a}) to self.\n", "Energized", x =>
+            {
+                x.amount = a;
+                x.conditions = null;
+                x._triggerOn = new TriggerCalls[0];
+
+                x._characterDescription += "Powered Up makes this party member's abilities act as if they were 1 level higher for each stack of Powered Up.";
+                x._enemyDescription += "Powered Up increases damage dealt by this enemy by 25% for each stack of Powered Up.";
+            }, "Energized"));
+        }
+
         public static void Init()
         {
             TargetShift_Left = CreateScriptable<TargetShiftPassive>(x =>
@@ -230,6 +273,17 @@ namespace BOSpecialItems.Content.Additional
                         targets = TargettingLibrary.ThisSlot
                     }
                 };
+            });
+
+            TargetSwapped = CreatePassive<TargetSwappedPassiveAbility>("TargetSwapped", "Permanently applies TargetSwap to self.\nTargetSwap makes this {0}'s abilities target as if they were on the {1} side.", "TargetSwapped", x =>
+            {
+                x.conditions = null;
+                x._triggerOn = new TriggerCalls[0];
+            });
+            Frenzied = CreatePassive<FrenziedPassiveAbility>("Frenzied", "Permanently applies Berserk to self.\nBerserk makes this {0} deal double damage.", "Frenzied", x =>
+            {
+                x.conditions = null;
+                x._triggerOn = new TriggerCalls[0];
             });
         }
     }

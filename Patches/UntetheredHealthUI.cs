@@ -63,7 +63,7 @@ namespace BOSpecialItems.Patches
                 var buttonhold = CombatManager.Instance._combatUI._infoZone._unitHealthBar.GetComponent<ChangeHealthColorButtonHolder>();
                 if (buttonhold != null && buttonhold.button != null)
                 {
-                    buttonhold.button.GetComponent<Image>().sprite = (buttonhold.button.GetComponent<Button>().interactable = !__instance.PlayerInputLocked) ? buttonhold.originalSprite : ChangeHealthColorButtonHolder.disabledSprite;
+                    buttonhold.button.GetComponent<Image>().sprite = (buttonhold.button.GetComponent<Button>().interactable = !__instance.PlayerInputLocked) ? buttonhold.originalSprite : UISprites.ManaToggle_Disabled;
                 }
             }
         }
@@ -82,20 +82,13 @@ namespace BOSpecialItems.Patches
             __instance.Enemies[enemyID].Ext();
         }
 
-        [HarmonyPatch(typeof(CharacterCombat), nameof(CharacterCombat.ChangeHealthColor))]
+        [HarmonyPatch(typeof(EnemyCombat), nameof(EnemyCombat.HealthColor), MethodType.Setter)]
+        [HarmonyPatch(typeof(CharacterCombat), nameof(CharacterCombat.HealthColor), MethodType.Setter)]
         [HarmonyPostfix]
-        public static void ChangeCharacterColorOption(CharacterCombat __instance, ManaColorSO manaColor)
+        public static void ChangeCharacterColorOption(IUnit __instance, ManaColorSO value)
         {
-            var ext = __instance.Ext();
-            ext.HealthColors[ext.CurrentHealthColor % ext.HealthColors.Count] = manaColor;
-        }
-
-        [HarmonyPatch(typeof(EnemyCombat), nameof(EnemyCombat.ChangeHealthColor))]
-        [HarmonyPostfix]
-        public static void ChangeCharacterColorOption(EnemyCombat __instance, ManaColorSO manaColor)
-        {
-            var ext = __instance.Ext();
-            ext.HealthColors[ext.CurrentHealthColor % ext.HealthColors.Count] = manaColor;
+            var ext = __instance.UnitExt();
+            ext.HealthColors[ext.CurrentHealthColor % ext.HealthColors.Count] = value;
         }
     }
 
@@ -103,7 +96,7 @@ namespace BOSpecialItems.Patches
     {
         public Vector3 targetPos;
 
-        public void Update()
+        public void LateUpdate()
         {
             transform.localPosition = targetPos;
         }
@@ -114,7 +107,6 @@ namespace BOSpecialItems.Patches
         public GameObject button;
         public CombatHealthBarLayout layout;
         public Sprite originalSprite;
-        public static Sprite disabledSprite;
 
         public void ButtonClicked()
         {
@@ -131,9 +123,16 @@ namespace BOSpecialItems.Patches
                 }
                 if(u != null)
                 {
-                    var ext = u.UnitExt();
-                    ext.CurrentHealthColor = (ext.CurrentHealthColor + 1) % ext.HealthColors.Count;
-                    u.ChangeHealthColor(ext.HealthColors[ext.CurrentHealthColor]);
+                    var boolref = new BooleanReference(true);
+                    CombatManager.Instance.PostNotification(TriggerCalls.CanChangeHealthColor.ToString(), u, boolref);
+
+                    if (boolref.value)
+                    {
+                        var ext = u.UnitExt();
+                        ext.CurrentHealthColor = (ext.CurrentHealthColor + 1) % ext.HealthColors.Count;
+
+                        u.ForceChangeHealthColor(ext.HealthColors[ext.CurrentHealthColor]);
+                    }
                 }
             }
         }

@@ -8,7 +8,7 @@ namespace BOSpecialItems.Content.Items
     {
         public static void Init()
         {
-            var item = NewItem<PerformEffectWearable>("Placeholder", "", "", "Placeholder", ItemPools.Shop);
+            var item = NewItem<PerformEffectWearable>("Abandoned Music Box", "\"An eerie tune\"", "At the start of combat, add an ability to this party member that performs all of their abilities. The cost for the ability is set to the combined cost of every ability currently on this party member.", "MusicBox", ItemPools.Shop, 5);
             item.triggerOn = TriggerCalls.OnCombatStart;
             item.effects = new EffectInfo[]
             {
@@ -41,7 +41,7 @@ namespace BOSpecialItems.Content.Items
                                 targets = null
                             }
                         };
-                        x._abilityName = "couldnt think of a name yet";
+                        x._abilityName = "Chaos Melody";
                         x._description = "Make this party member perform all of their abilities except this one. Abilities will be performed as if this party member's position is shifted to that ability's position relative to the position of the middle ability.";
                     }))
                 }

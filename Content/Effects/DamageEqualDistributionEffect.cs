@@ -9,6 +9,8 @@ namespace BOSpecialItems.Content.Effects
         public override bool PerformEffect(CombatStats stats, IUnit caster, TargetSlotInfo[] targets, bool areTargetSlots, int entryVariable, out int exitAmount)
         {
             exitAmount = 0;
+            var directdamage = 0;
+
             foreach(var t in targets)
             {
                 if(t != null && t.HasUnit)
@@ -41,7 +43,10 @@ namespace BOSpecialItems.Content.Effects
                             amt = Mathf.Max(amt - damageAmount, 0);
                             if (directDamage)
                             {
-                                exitAmount += unit.Damage(caster.WillApplyDamage(damageAmount, unit), caster, DeathType.Basic, t.SlotID - unit.SlotID, true, true, false, DamageType.None).damageAmount;
+                                var dmg = unit.Damage(caster.WillApplyDamage(damageAmount, unit), caster, DeathType.Basic, t.SlotID - unit.SlotID, true, true, false, DamageType.None).damageAmount;
+
+                                directdamage += dmg;
+                                exitAmount += dmg;
                             }
                             else
                             {
@@ -52,6 +57,12 @@ namespace BOSpecialItems.Content.Effects
                     }
                 }
             }
+
+            if(directdamage > 0)
+            {
+                caster.DidApplyDamage(directdamage);
+            }
+
             return exitAmount > 0;
         }
     }

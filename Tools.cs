@@ -1,4 +1,5 @@
-﻿using FMOD;
+﻿using BepInEx.Configuration;
+using FMOD;
 using FMODUnity;
 using System;
 using System.Collections.Generic;
@@ -14,6 +15,8 @@ namespace BOSpecialItems
     public static class Tools
     {
         public static Assembly SpecialItemsAssembly;
+        public static ConfigFile Config;
+        public static AssetBundle Bundle;
 
         public static Texture2D LoadTexture(string name)
         {
@@ -42,7 +45,7 @@ namespace BOSpecialItems
             return false;
         }
 
-        public static Sprite LoadSprite(string name, int pixelsperunit = 1, Vector2? pivot = null)
+        public static Sprite LoadSprite(string name, int pixelsperunit = 32, Vector2? pivot = null)
         {
             var tex = LoadTexture(name);
             if(tex != null)
@@ -141,6 +144,53 @@ namespace BOSpecialItems
             var s = ScriptableObject.CreateInstance<T>();
             configure?.Invoke(s);
             return s;
+        }
+
+        public static T CreatePassive<T>(string name, string description, string sprite, Action<T> configure = null, string overrideEnum = null) where T : BasePassiveAbilitySO
+        {
+            var p = ScriptableObject.CreateInstance<T>();
+            var codename = name.ToCodeName();
+
+            p.name = $"{codename}_PA";
+            p.type = ExtendEnum<PassiveAbilityTypes>(overrideEnum ?? codename);
+
+            p._passiveName = name;
+            p.SetDescriptions(description);
+
+            p.passiveIcon = LoadSprite(sprite);
+
+            configure?.Invoke(p);
+
+            return p;
+        }
+
+        public static T CreateCharacter<T>(string name, string spriteBase, Action<T> configure = null, bool add = true) where T : CharacterSO
+        {
+            var c = ScriptableObject.CreateInstance<T>();
+            var codename = name.ToCodeName();
+
+            c.name = $"{codename}_CH";
+            c.unitType = ExtendEnum<UnitType>(codename);
+
+            c._characterName = name;
+
+            configure?.Invoke(c);
+
+            if (add)
+                c.AddCharacter();
+
+            return c;
+        }
+
+        public static TValue LookForOrCreate<TKey, TValue>(this Dictionary<TKey, TValue> lookup, TKey k, Func<TKey, TValue> create)
+        {
+            if (lookup.TryGetValue(k, out var value))
+            {
+                value = create(k);
+                lookup[k] = value;
+            }
+
+            return value;
         }
 
         public static ManaColorSO[] Cost(params ManaColorSO[] colors)
@@ -265,6 +315,83 @@ namespace BOSpecialItems
             return new(damageDealt, killed);
         }
 
+        public static DamageInfo SilentDamage(this IUnit u, int amount, IUnit killer, DeathType deathType, int targetSlotOffset = -1, bool addHealthMana = true, bool directDamage = true, bool ignoresShield = false, DamageType specialDamage = DamageType.None)
+        {
+            if (u is not CharacterCombat and not EnemyCombat)
+            {
+                return new(0, false);
+            }
+            var firstSlot = u.SlotID;
+            var lastSlot = u.SlotID + u.Size - 1;
+            if (targetSlotOffset >= 0)
+            {
+                targetSlotOffset = Mathf.Clamp(u.SlotID + targetSlotOffset, firstSlot, lastSlot);
+                firstSlot = targetSlotOffset;
+                lastSlot = targetSlotOffset;
+            }
+            var ex = new DamageReceivedValueChangeException(amount, specialDamage, directDamage, ignoresShield, firstSlot, lastSlot);
+            CombatManager.Instance.PostNotification(TriggerCalls.OnBeingDamaged.ToString(), u, ex);
+            var modifiedValue = ex.GetModifiedValue();
+            if (killer != null && !killer.Equals(null))
+            {
+                CombatManager.Instance.ProcessImmediateAction(new UnitDamagedImmediateAction(modifiedValue, killer.IsUnitCharacter));
+            }
+            var newHealth = Mathf.Max(u.CurrentHealth - modifiedValue, 0);
+            var damageDealt = u.CurrentHealth - newHealth;
+            if (damageDealt != 0)
+            {
+                if (u is CharacterCombat cc)
+                {
+                    cc.GetHit();
+                    cc.CurrentHealth = newHealth;
+                }
+                else if (u is EnemyCombat ec)
+                {
+                    ec.CurrentHealth = newHealth;
+                }
+                if (specialDamage == DamageType.None)
+                {
+                    specialDamage = Utils.GetBasicDamageTypeFromAmount(modifiedValue);
+                }
+                if (u is CharacterCombat)
+                {
+                    CombatManager.Instance.AddUIAction(new CharacterDamagedUIAction(u.ID, u.CurrentHealth, u.MaximumHealth, modifiedValue, specialDamage));
+                }
+                else if (u is EnemyCombat)
+                {
+                    CombatManager.Instance.AddUIAction(new EnemyDamagedUIAction(u.ID, u.CurrentHealth, u.MaximumHealth, modifiedValue, specialDamage));
+                }
+                if (addHealthMana)
+                {
+                    CombatManager.Instance.ProcessImmediateAction(new AddManaToManaBarAction(u.HealthColor, Utils.enemyManaAmount, u.IsUnitCharacter, u.ID));
+                }
+            }
+            else if (ex == null || !ex.ShouldIgnoreUI)
+            {
+                if (u is CharacterCombat)
+                {
+                    CombatManager.Instance.AddUIAction(new CharacterNotDamagedUIAction(u.ID, DamageType.Weak));
+                }
+                else if (u is EnemyCombat)
+                {
+                    CombatManager.Instance.AddUIAction(new EnemyNotDamagedUIAction(u.ID));
+                }
+            }
+            var killed = u.CurrentHealth == 0 && damageDealt != 0;
+            if (killed)
+            {
+                if (u is CharacterCombat)
+                {
+                    CombatManager.Instance.AddSubAction(new CharacterDeathAction(u.ID, killer, deathType));
+                }
+                else if (u is EnemyCombat)
+                {
+                    CombatManager.Instance.AddSubAction(new EnemyDeathAction(u.ID, killer, deathType));
+                }
+            }
+            return new(damageDealt, killed);
+        }
+
         public static int RandomizeAllButColor(this ManaBar bar, ManaColorSO excludecolor, ManaColorSO[] options)
         {
             var idxes = new List<int>();
@@ -310,6 +437,108 @@ namespace BOSpecialItems
             return null;
         }
 
+        public static int GetRandomCharacterSlotWithSize(this CombatStats stat, int size)
+        {
+            var slot = -1;
+            var remainingSlots = new List<int>();
+            for (int i = 0; i < stat.combatSlots.CharacterSlots.Length; i++)
+            {
+                remainingSlots.Add(i);
+            }
+            while (remainingSlots.Count > 0)
+            {
+                var idx = Random.Range(0, remainingSlots.Count);
+                var slothere = remainingSlots[idx];
+                remainingSlots.RemoveAt(idx);
+                slot = stat.combatSlots.GetCharacterFitSlot(slothere, size);
+                if (slot != -1)
+                {
+                    break;
+                }
+            }
+            return slot;
+        }
+
+        public static IEnumerable MatchBefore(this ILCursor curs, Func<Instruction, bool> predicate)
+        {
+            for(; curs.JumpBeforeNext(predicate); curs.JumpToNext(predicate))
+            {
+                yield return null;
+            }
+        }
+
+        public static VariableDefinition DeclareLocal<T>(this ILContext ctx)
+        {
+            var loc = new VariableDefinition(ctx.Import(typeof(T)));
+            ctx.Body.Variables.Add(loc);
+
+            return loc;
+        }
+
+        public static VariableDefinition DeclareLocal<T>(this ILCursor curs)
+        {
+            return curs.Context.DeclareLocal<T>();
+        }
+
+        public static void ForceChangeHealthColor(this IUnit u, ManaColorSO newColor)
+        {
+            if(u is CharacterCombat cc)
+            {
+                cc.HealthColor = newColor;
+                CombatManager.Instance.AddUIAction(new CharacterHealthColorChangeUIAction(cc.ID, cc.HealthColor));
+            }
+            else if(u is EnemyCombat ec)
+            {
+                ec.HealthColor = newColor;
+                CombatManager.Instance.AddUIAction(new EnemyHealthColorChangeUIAction(ec.ID, ec.HealthColor));
+            }
+        }
+
+        public static bool Calls(this Instruction instr, MethodBase mthd)
+        {
+            return instr.MatchCallOrCallvirt(mthd);
+        }
+
+        public static bool JumpToNext(this ILCursor curs, Func<Instruction, bool> predicate, int times = 1)
+        {
+            for(int i = 0; i < times; i++)
+            {
+                if(!curs.TryGotoNext(MoveType.After, predicate))
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        public static bool JumpBeforeNext(this ILCursor curs, Func<Instruction, bool> predicate, int times = 1)
+        {
+            //Debug.Log($"jump before next, curr idx {curs.Index}");
+            for (int i = 0; i < times - 1; i++)
+            {
+                if (!curs.TryGotoNext(MoveType.After, predicate))
+                {
+                    return false;
+                }
+                //Debug.Log($"   curr idx {curs.Index}");
+            }
+            if(curs.TryGotoNext(MoveType.Before, predicate))
+            {
+                //Debug.Log($"   end {curs.Index}");
+                return true;
+            }
+            return false;
+        }
+
+        public static void CharacterLevelSetup(this CharacterSO ch, Func<int, CharacterRankedData> levelsetup, int levels = 4)
+        {
+            ch.rankedData = new CharacterRankedData[levels];
+            for(int i = 0; i < levels; i++)
+            {
+                ch.rankedData[i] = levelsetup(i);
+            }
+        }
+
         public static CharacterCombatExt Ext(this CharacterCombat cc)
         {
             var ext = CombatManager.Instance.Ext();
@@ -333,6 +562,72 @@ namespace BOSpecialItems
             }
         }
 
+        public static List<CombatAbility> GetAbilities(this IUnit unit)
+        {
+            if(unit is CharacterCombat cc)
+            {
+                return cc.CombatAbilities ?? new();
+            }
+            else if(unit is EnemyCombat ec)
+            {
+                return ec.Abilities ?? new();
+            }
+            return new();
+        }
+        
+        public static void UpdateUIAbilities(this IUnit unit)
+        {
+            if(unit is CharacterCombat cc)
+            {
+                CombatManager.Instance.AddUIAction(new CharacterUpdateAllAttacksUIAction(cc.ID, cc.CombatAbilities.ToArray()));
+            }
+            else if(unit is EnemyCombat ec)
+            {
+                CombatManager.Instance.AddUIAction(new EnemyUpdateAllAttacksUIAction(ec.ID, ec.Abilities.ToArray()));
+            }
+        }
+
+        public static Vector3 Vector3Divide(Vector3 left, Vector3 right)
+        {
+            return new(left.x / right.x, left.y / right.y, left.z / right.z);
+        }
+
+        public static T AddComponent<T>(this Component comp) where T : Component
+        {
+            if(comp == null || comp.gameObject == null)
+            {
+                return null;
+            }
+            return comp.gameObject.AddComponent<T>();
+        }
+
+        public static T GetOrAddComponent<T>(this Component comp) where T : Component
+        {
+            if(comp == null || comp.gameObject == null)
+            {
+                return null;
+            }
+            return comp.gameObject.GetOrAddComponent<T>();
+        }
+
+        public static T GetOrAddComponent<T>(this GameObject go) where T : Component
+        {
+            if(go == null)
+            {
+                return null;
+            }
+            if(go.GetComponent<T>() != null)
+            {
+                return go.GetComponent<T>();
+            }
+            return go.AddComponent<T>();
+        }
+
+        public static bool HasAnyNotifications(string notifName, object sender)
+        {
+            return NtfUtils.notifications != null && NtfUtils.notifications._table != null && NtfUtils.notifications._table.ContainsKey(notifName) && NtfUtils.notifications._table[notifName] != null && NtfUtils.notifications._table[notifName].ContainsKey(sender) && NtfUtils.notifications._table[notifName][sender] != null && NtfUtils.notifications._table[notifName][sender].Count > 0;
+        }
+
         public static EnemyCombatExt Ext(this EnemyCombat cc)
         {
             var ext = CombatManager.Instance.Ext();
@@ -341,6 +636,102 @@ namespace BOSpecialItems
                 ext.Enemies.Add(cc.ID, new(cc));
             }
             return ext.Enemies[cc.ID];
+        }
+
+        public static void SetDescriptions(this BasePassiveAbilitySO passive, string descriptionFormat)
+        {
+            passive._characterDescription = string.Format(descriptionFormat,
+                "party member",
+                "enemy",
+                "party members",
+                "enemies",
+                "Party member",
+                "Enemy",
+                "Party members",
+                "Enemies");
+            passive._enemyDescription = string.Format(descriptionFormat,
+                "enemy",
+                "party member",
+                "enemies",
+                "party members",
+                "Enemy",
+                "Party member",
+                "Enemies",
+                "Party members");
+        }
+
+        public static void DoForEachUnit(this CombatStats stats, Action<IUnit> dowhat)
+        {
+            foreach(var kvp in stats.CharactersOnField)
+            {
+                dowhat?.Invoke(kvp.Value);
+            }
+            foreach(var kvp in stats.EnemiesOnField)
+            {
+                dowhat?.Invoke(kvp.Value);
+            }
+        }
+
+        public static void DoForEachUnit(Action<IUnit> dowhat)
+        {
+            CombatManager.Instance._stats.DoForEachUnit(dowhat);
+        }
+
+        public static T Choose<T>(int level, params T[] values)
+        {
+            return values[level];
+        }
+
+        public static IntentType IntentForDamage(int damage)
+        {
+            if(damage <= 2)
+            {
+                return IntentType.Damage_1_2;
+            }
+            else if(damage <= 6)
+            {
+                return IntentType.Damage_3_6;
+            }
+            else if(damage <= 10)
+            {
+                return IntentType.Damage_7_10;
+            }
+            else if(damage <= 15)
+            {
+                return IntentType.Damage_11_15;
+            }
+            else if (damage <= 20)
+            {
+                return IntentType.Damage_16_20;
+            }
+            return IntentType.Damage_21;
+        }
+
+        public static bool IsOpposing(IUnit first, IUnit second)
+        {
+            return
+                first != null &&
+                second != null &&
+                first.IsUnitCharacter != second.IsUnitCharacter &&
+                    ((second.SlotID >= first.SlotID && second.SlotID <= first.LastSlotId()) ||
+                    (second.LastSlotId() >= first.SlotID && second.LastSlotId() <= first.LastSlotId()) ||
+                    (first.SlotID >= second.SlotID && first.SlotID <= second.LastSlotId()) ||
+                    (first.LastSlotId() >= second.SlotID && first.LastSlotId() <= second.LastSlotId()));
+        }
+
+        public static CharacterCombat RealCharacter(this CharacterCombatUIInfo self)
+        {
+            return CombatManager.Instance._stats.Characters[self.ID];
+        }
+
+        public static int LastSlotId(this IUnit u)
+        {
+            return u.SlotID + u.Size - 1;
+        }
+
+        public static void AddCharacter(this CharacterSO ch)
+        {
+            LoadedAssetsHandler.LoadedCharacters[ch.name] = ch;
         }
 
         public static T NewItem<T>(string name, string flavor, string description, string sprite, ItemPools pools, int price = 0, bool silent = false) where T : BaseWearableSO
@@ -359,19 +750,35 @@ namespace BOSpecialItems
                 x.hasSpecialUnlock = false;
                 x.usesTheOnUnlockText = false;
 
-                x.name = name.ToCodeName();
+                var codename = name.ToCodeName();
+                x.name = codename;
 
                 if (pools.HasFlag(ItemPools.Shop))
                 {
                     x.name += "_SW";
+
+                    if(!Config.Bind("Items.Shop", codename, true, $"Whether or not the item {name} appears in shops.").Value)
+                    {
+                        pools &= ~ItemPools.Shop;
+                    }
                 }
                 if (pools.HasFlag(ItemPools.Treasure))
                 {
                     x.name += "_TW";
+
+                    if (!Config.Bind("Items.Treasure", codename, true, $"Whether or not the item {name} appears in treasure chests.").Value)
+                    {
+                        pools &= ~ItemPools.Treasure;
+                    }
                 }
                 if (pools.HasFlag(ItemPools.Fish))
                 {
                     x.name += "_FW";
+
+                    if (!Config.Bind("Items.Fish", codename, true, $"Whether or not the item {name} appears in the fish pool.").Value)
+                    {
+                        pools &= ~ItemPools.Fish;
+                    }
                 }
                 if (pools.HasFlag(ItemPools.Extra))
                 {

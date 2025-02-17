@@ -80,9 +80,9 @@ namespace BOSpecialItems.Content.Effects
             var slot = stats.GetRandomEnemySlot(enemy.size);
             if (slot != -1)
             {
-                Debug.Log("adding merged enemy");
+                //Debug.Log("adding merged enemy");
                 stats.AddNewEnemy(enemy, slot, experience, SpawnType.Basic);
-                Debug.Log("finished adding merged enemy");
+                //Debug.Log("finished adding merged enemy");
                 if (stats.combatSlots.EnemySlots[slot].Unit is EnemyCombat en)
                 {
                     en.MaximumHealth = healthMax;

@@ -12,7 +12,7 @@ namespace BOSpecialItems.Content.Effects
         public override bool PerformEffect(CombatStats stats, IUnit caster, TargetSlotInfo[] targets, bool areTargetSlots, int entryVariable, out int exitAmount)
         {
             CombatManager.Instance.AddUIAction(new AdvancedAnimationVisualsAction(animations, caster));
-            exitAmount = 0;
+            exitAmount = PreviousExitValue;
             return true;
         }
     }
@@ -113,7 +113,7 @@ namespace BOSpecialItems.Content.Effects
                                 }
                                 var t = abilityActionHandler.transform;
                                 t.position = position;
-                                t.rotation = animationUI._characterAttackLocations[targetSlotInfo.SlotID].rotation;
+                                t.rotation = Quaternion.Euler(animationUI._characterAttackLocations[targetSlotInfo.SlotID].rotation.eulerAngles + Vector3.forward * r.zRotation);
                             }
                             else
                             {
@@ -134,7 +134,7 @@ namespace BOSpecialItems.Content.Effects
                                 }
                                 var t = abilityActionHandler.transform;
                                 t.position = position;
-                                t.rotation = animationUI._enemyAttackLocations[targetSlotInfo.SlotID].rotation;
+                                t.rotation = Quaternion.Euler(animationUI._enemyAttackLocations[targetSlotInfo.SlotID].rotation.eulerAngles + Vector3.forward * r.zRotation);
                             }
                             soundPos += position;
                             abilityActionHandler.Animator.runtimeAnimatorController = aoc;
@@ -197,5 +197,6 @@ namespace BOSpecialItems.Content.Effects
         public bool playAudio = true;
         public float timeDelay;
         public int targettingOffset;
+        public float zRotation;
     }
 }

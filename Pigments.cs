@@ -13,9 +13,17 @@ namespace BOSpecialItems
         public static ManaColorSO Green;
         public static ManaColorSO Grey;
 
+        public static Texture2D optionalTemplate;
+        public static Texture2D punishingTemplate;
+
+        public static Texture2D optionalPigmentTemplate;
+        public static Texture2D punishingPigmentTemplate;
+
         private const int SPLIT_PIGMENT_LIMIT = 4;
 
         private readonly static Dictionary<ManaColorSO[], ManaColorSO> AlreadyMadeSplitPigment = new();
+        private readonly static Dictionary<ManaColorSO, ManaColorSO> AlreadyMadeOptionalPigment = new();
+        private readonly static Dictionary<ManaColorSO, ManaColorSO> AlreadyMadePunishingPigment = new();
 
         private static Dictionary<Sprite, Sprite> readableVersions = new();
 
@@ -59,6 +67,12 @@ namespace BOSpecialItems
                 x.name = "Pigment_Green";
             });
 
+            optionalTemplate = LoadTexture("Optional_2");
+            punishingTemplate = LoadTexture("Optional_3");
+
+            optionalPigmentTemplate = LoadTexture("Optional_2_Pigment");
+            punishingPigmentTemplate = LoadTexture("Optional_3_Pigment");
+
             readableVersions = new()
             {
                 { Red.manaSprite,                   LoadSprite("RedMana") },
@@ -93,6 +107,70 @@ namespace BOSpecialItems
             };
         }
 
+        public static ManaColorSO Optional(this ManaColorSO orig)
+        {
+            if(orig == null)
+            {
+                return null;
+            }
+            if (AlreadyMadeOptionalPigment.TryGetValue(orig, out var alreadyExists))
+            {
+                return alreadyExists;
+            }
+
+            return CreateScriptable<ManaColorSOAdvanced>(x =>
+            {
+                x.Inherit(orig);
+
+                var pigment = StitchTextures(optionalPigmentTemplate, new List<Sprite>() { orig.manaSprite });
+                var cost = StitchTextures(optionalTemplate, new List<Sprite>() { Readable(orig.manaCostSprite) });
+                var selected = StitchTextures(optionalTemplate, new List<Sprite>() { Readable(orig.manaCostSelectedSprite) });
+
+                x.manaSprite = Sprite.Create(pigment, new Rect(0f, 0f, pigment.width, pigment.height), new Vector2(0.5f, 0.5f));
+                x.manaCostSprite = Sprite.Create(cost, new Rect(0f, 0f, cost.width, cost.height), new Vector2(0.5f, 0.5f));
+                x.manaCostSelectedSprite = Sprite.Create(selected, new Rect(0f, 0f, selected.width, selected.height), new Vector2(0.5f, 0.5f));
+
+                x.requiresPigment = false;
+                x.noPigmentCountsAsDamage = false;
+
+                x.name = $"{orig.name}_Optional";
+
+                AlreadyMadeOptionalPigment[orig] = x;
+            });
+        }
+
+        public static ManaColorSO Punishing(this ManaColorSO orig)
+        {
+            if (orig == null)
+            {
+                return null;
+            }
+            if (AlreadyMadePunishingPigment.TryGetValue(orig, out var alreadyExists))
+            {
+                return alreadyExists;
+            }
+
+            return CreateScriptable<ManaColorSOAdvanced>(x =>
+            {
+                x.Inherit(orig);
+
+                var pigment = StitchTextures(punishingPigmentTemplate, new List<Sprite>() { orig.manaSprite });
+                var cost = StitchTextures(punishingTemplate, new List<Sprite>() { orig.manaCostSprite });
+                var selected = StitchTextures(punishingTemplate, new List<Sprite>() { orig.manaCostSelectedSprite });
+
+                x.manaSprite = Sprite.Create(pigment, new Rect(0f, 0f, pigment.width, pigment.height), new Vector2(0.5f, 0.5f));
+                x.manaCostSprite = Sprite.Create(cost, new Rect(0f, 0f, cost.width, cost.height), new Vector2(0.5f, 0.5f));
+                x.manaCostSelectedSprite = Sprite.Create(selected, new Rect(0f, 0f, selected.width, selected.height), new Vector2(0.5f, 0.5f));
+
+                x.requiresPigment = false;
+                x.noPigmentCountsAsDamage = true;
+
+                x.name = $"{orig.name}_Punishing";
+
+                AlreadyMadePunishingPigment[orig] = x;
+            });
+        }
+
         public static ManaColorSO SplitPigment(params ManaColorSO[] stuff)
         {
             if(stuff.Length <= 0)
@@ -114,13 +192,16 @@ namespace BOSpecialItems
             {
                 return alreadyExists;
             }
-            var split = CreateScriptable<ManaColorSO>(x =>
+            var split = CreateScriptable<ManaColorSOAdvanced>(x =>
             {
                 var name = "Pigment";
 
                 var type = PigmentType.None;
                 var dealsWrongPigmentDamage = true;
                 var canGenerate = false;
+
+                var requirePigment = true;
+                var noPigmentCountsAsDamage = true;
 
                 var manaSprites = new List<Sprite>();
                 var usedSprites = new List<Sprite>();
@@ -133,6 +214,12 @@ namespace BOSpecialItems
                     type |= pigment.pigmentType;
                     dealsWrongPigmentDamage &= pigment.dealsCostDamage;
                     canGenerate |= pigment.canGenerateMana;
+
+                    if(pigment is ManaColorSOAdvanced adv)
+                    {
+                        requirePigment &= adv.requiresPigment;
+                        noPigmentCountsAsDamage &= adv.noPigmentCountsAsDamage;
+                    }
 
                     manaSprites.Add(Readable(pigment.manaSprite));
                     usedSprites.Add(Readable(pigment.manaUsedSprite));
@@ -148,17 +235,20 @@ namespace BOSpecialItems
                 x.canGenerateMana = canGenerate;
                 x.manaSoundEvent = stuff[0].manaSoundEvent;
 
+                x.requiresPigment = requirePigment;
+                x.noPigmentCountsAsDamage = noPigmentCountsAsDamage;
+
                 var manaSprite = StitchTextures(LoadTexture($"Split{stuff.Length}_Pigment"), manaSprites);
                 var usedSprite = StitchTextures(LoadTexture($"Split{stuff.Length}_Selected"), usedSprites);
                 var costSprite = StitchTextures(LoadTexture($"Split{stuff.Length}_Cost"), costSprites);
                 var selectedCostSprite = StitchTextures(LoadTexture($"Split{stuff.Length}_Cost"), selectedCostSprites);
                 var healthSprite = StitchTextures(LoadTexture($"Split{stuff.Length}_Health"), healthSprites);
 
-                x.manaSprite = Sprite.Create(manaSprite, new Rect(0f, 0f, manaSprite.width, manaSprite.height), new Vector2(0.5f, 0.5f), 1);
-                x.manaUsedSprite = Sprite.Create(usedSprite, new Rect(0f, 0f, usedSprite.width, usedSprite.height), new Vector2(0.5f, 0.5f), 1);
-                x.manaCostSprite = Sprite.Create(costSprite, new Rect(0f, 0f, costSprite.width, costSprite.height), new Vector2(0.5f, 0.5f), 1);
-                x.manaCostSelectedSprite = Sprite.Create(selectedCostSprite, new Rect(0f, 0f, selectedCostSprite.width, selectedCostSprite.height), new Vector2(0.5f, 0.5f), 1);
-                x.healthSprite = Sprite.Create(healthSprite, new Rect(0f, 0f, healthSprite.width, healthSprite.height), new Vector2(0.5f, 0.5f), 1);
+                x.manaSprite = Sprite.Create(manaSprite, new Rect(0f, 0f, manaSprite.width, manaSprite.height), new Vector2(0.5f, 0.5f));
+                x.manaUsedSprite = Sprite.Create(usedSprite, new Rect(0f, 0f, usedSprite.width, usedSprite.height), new Vector2(0.5f, 0.5f));
+                x.manaCostSprite = Sprite.Create(costSprite, new Rect(0f, 0f, costSprite.width, costSprite.height), new Vector2(0.5f, 0.5f));
+                x.manaCostSelectedSprite = Sprite.Create(selectedCostSprite, new Rect(0f, 0f, selectedCostSprite.width, selectedCostSprite.height), new Vector2(0.5f, 0.5f));
+                x.healthSprite = Sprite.Create(healthSprite, new Rect(0f, 0f, healthSprite.width, healthSprite.height), new Vector2(0.5f, 0.5f));
 
                 x.name = name;
             });

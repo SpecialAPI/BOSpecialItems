@@ -15,5 +15,17 @@ namespace BOSpecialItems
         public const string ABILITY_USED_CONTEXT =          "BOSpecialItems_OnAbilityUsedContext";
 
         public const string MODIFY_ABILITIES_RANK =         "BOSpecialItems_ModifyAbilityRank";
+
+        public const string MODIFY_USED_ABILITY =           "BOSpecialItems_ModifyUsedAbility";
+
+        public const string MODIFY_PIGMENT_PRODUCED =       "BOSpecialItems_ModifyPigmentProduced";
+
+        public const string STATUS_EFFECT_FIRST_APPLIED =   "BOSpecialItems_StatusEffectFirstAplied";
+        public const string STATUS_EFFECT_APPLIED =         "BOSpecialItems_StatusEffectApplied";
+        public const string STATUS_EFFECT_INCREASED =       "BOSpecialItems_StatusEffectIncreased";
+
+        public const string WILL_HEAL_UNIT =                "BOSpcialItems_WillHealUnit";
+
+        public const string WILL_APPLY_DAMAGE_CONTEXT =     "BOSpecialItems_WillApplyDamageContext";
     }
 }

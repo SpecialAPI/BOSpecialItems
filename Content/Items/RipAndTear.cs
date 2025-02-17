@@ -14,14 +14,14 @@ namespace BOSpecialItems.Content.Items
             {
                 new()
                 {
-                    condition = null,
+                    condition = Conditions.Chance(50),
                     effect = CreateScriptable<ApplyFuryEffect>(),
                     entryVariable = 2,
                     targets = TargettingLibrary.ThisSlot
                 },
                 new()
                 {
-                    condition = null,
+                    condition = Conditions.Previous(wasSuccessful: false),
                     effect = CreateScriptable<ApplyBerserkEffect>(),
                     entryVariable = 2,
                     targets = TargettingLibrary.ThisSlot

@@ -4,7 +4,7 @@
     {
         public static void Init()
         {
-            var targetter = NewItem<BasicWearable>("Eyepatch", "\"Hit the same less often\"", "This party member now has TargetShift (Left) as a passive. Adds \"Retarget\" as an additional ability, an ability that allows this party member to change their TargetShift.", "Eyepatch", ItemPools.Treasure);
+            var targetter = NewItem<BasicWearable>("Eyepatch", "\"Hit the same less often\"", "This party member now has TargetShift (Left) as a passive. Adds \"Retarget\" as an additional ability, an ability that allows this party member to change their TargetShift.", "Eyepatch", ItemPools.Shop, 6);
             targetter.staticModifiers = new WearableStaticModifierSetterSO[]
             {
                 CreateScriptable<ExtraPassiveAbility_Wearable_SMS>(x =>
